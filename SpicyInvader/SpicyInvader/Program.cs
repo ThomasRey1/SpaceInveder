@@ -20,47 +20,47 @@ namespace SpicyInvader
         /// <param name="args"></param>
         static void Main(string[] args)
         {
-            test test = new test();
-            Console.Read();
-            //// Properties
-            //byte choice = 1;                // The choice option of the player
-            //bool redo = true;               // Redo a while loop until the player choose an option
-            //bool soundGame = true;          // The sound is ON or OFF
-            //bool difficulty = false;        // The difficulty level
+            //test test = new test();
+            //Console.Read();
+            // Properties
+            byte choice = 1;                // The choice option of the player
+            bool redo = true;               // Redo a while loop until the player choose an option
+            bool soundGame = true;          // The sound is ON or OFF
+            bool difficulty = false;        // The difficulty level
 
-            //Sound.SoundMenu(soundGame);
+            Sound.SoundMenu(soundGame);
 
-            //// Execute the choice of the user
-            //do
-            //{
-            //    Console.CursorVisible = false;
-            //    Show(ref choice);
-            //    Console.Clear();
-            //    if (choice == 1)
-            //    {
-            //        GameSetting NewGame = new GameSetting(difficulty, soundGame);
-            //        NewGame.GameStarted();
+            // Execute the choice of the user
+            do
+            {
+                Console.CursorVisible = false;
+                Show(ref choice);
+                Console.Clear();
+                if (choice == 1)
+                {
+                    GameSetting NewGame = new GameSetting(difficulty, soundGame);
+                    NewGame.GameStarted();
 
-            //    }
-            //    else if (choice == 2)
-            //    {
-            //        Configure(ref soundGame, ref difficulty);
-            //    }
-            //    else if (choice == 3)
-            //    {
+                }
+                else if (choice == 2)
+                {
+                    Configure(ref soundGame, ref difficulty);
+                }
+                else if (choice == 3)
+                {
 
-            //    }
-            //    else if (choice == 4)
-            //    {
+                }
+                else if (choice == 4)
+                {
 
-            //    }
-            //    else if (choice == 5)
-            //    {
-            //        Environment.Exit(0);
-            //    }
-            //    Console.Clear();
-            //}
-            //while (redo);
+                }
+                else if (choice == 5)
+                {
+                    Environment.Exit(0);
+                }
+                Console.Clear();
+            }
+            while (redo);
         }
 
         /// <summary>

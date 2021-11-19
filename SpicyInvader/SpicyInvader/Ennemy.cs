@@ -14,12 +14,12 @@ namespace SpicyInvader
     /// <summary>
     /// Code managing the ennemy ship
     /// </summary>
-    class Ennemy
+    public class Ennemy
     {
         //Properties
-        private string _shipForm = "■─▬─■";                                 // The shap of the ennemy's ship
+        public string _shipForm = "■─▬─■";                                  // The shap of the ennemy's ship
         private bool _gamePause = false;                                    // Check if the game is in pause
-        Missile missileEnnemy = new Missile(1, 1, false);                   // Create a missile
+        private Missile missileEnnemy = new Missile(1, 1, false);           // Create a missile
         
 
         //Getter - Setter
@@ -54,8 +54,6 @@ namespace SpicyInvader
         /// </summary>
         public List<int> PosXBunker { get; set; }                           // Postition of the bunker
 
-        public string ShipForm { get; }
-
         public bool Shoot { get; set; }                                   // If the ennemy can shoot
 
 
@@ -65,16 +63,19 @@ namespace SpicyInvader
         /// <param name="ennemyX">The lateral position of the ship</param>
         /// <param name="ennemyY">The vertical position of the ship</param>
         /// <param name="soundGame">The sound is ON or OFF</param>
-        public Ennemy(int ennemyX, int ennemyY, bool soundGame, bool ennemyDirection, bool shipEnnemyLive, List<int> posXBunker)
+        public Ennemy(int ennemyX, int ennemyY, bool soundGame, bool ennemyDirection, bool shipEnnemyLive, List<int> posXBunker, PlayerShip player)
         {
             this.EnnemyX = ennemyX;
             this.EnnemyY = ennemyY;
             this.SoundGame = soundGame;
             this.EnnemyDirection = ennemyDirection;
             this.ShipEnnemyLive = shipEnnemyLive;
+            missileEnnemy.PosXBunker = posXBunker;
+            missileEnnemy.Player = player;
+
             Console.SetCursorPosition(EnnemyX, EnnemyY);    // Position the cursor to the ship coordinate
             Console.Write(_shipForm);
-            missileEnnemy.PosXBunker = posXBunker;
+
             Timer ennemyShooting = new Timer(1000);
             ennemyShooting.Elapsed += new ElapsedEventHandler(EnnemyShoot);
             ennemyShooting.Enabled = true;
@@ -84,9 +85,9 @@ namespace SpicyInvader
             Random shoot = new Random();                // Generate a random number
             
             // If the random number is equal to 0, launch a missile
-            if (shoot.Next(0, 10) == 0 && Shoot == true)
+            if (shoot.Next(0, 6) == 0 && Shoot == true)
             {
-                Sound.SoundShipShoot(this.SoundGame);
+                Sound.SoundShipShoot(SoundGame); // Play the shoot sound
                 missileEnnemy.MissileLive = true;
                 missileEnnemy.MissileY = this.EnnemyY + 1;
                 missileEnnemy.MissileX = this.EnnemyX + (3);

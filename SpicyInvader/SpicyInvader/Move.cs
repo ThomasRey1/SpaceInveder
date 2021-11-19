@@ -14,13 +14,13 @@ namespace SpicyInvader
     /// <summary>
     /// Code managing movement of the enemies
     /// </summary>
-    class Move
+    public class Move
     {
-        private Ennemy[] ennemies;
+        private Ennemy[] _ennemies;
         
         public Move(Ennemy[] ennemies)
         {
-            this.ennemies = ennemies;
+            this._ennemies = ennemies;
             Timer ennemyMovement = new Timer(200);
             ennemyMovement.Elapsed += new ElapsedEventHandler(EnnemyControl);
             ennemyMovement.Enabled = true;
@@ -28,54 +28,65 @@ namespace SpicyInvader
 
         public void EnnemyControl(object source, ElapsedEventArgs e)
         {
-            for (int i = 0; i != ennemies.Length; i++)
+            for (int i = 0; i != _ennemies.Length; i++)
             {
-                if (ennemies[i] != null && ennemies[i].ShipEnnemyLive == true)
+                if (_ennemies[i] != null && _ennemies[i].ShipEnnemyLive == true)
                 {
                     // If the lateral position is touching the left border of the window
-                    if (ennemies[i].EnnemyX == Console.WindowLeft)
+                    if (_ennemies[i].EnnemyX == Console.WindowLeft)
                     {
-                        Console.MoveBufferArea(ennemies[i].EnnemyX, ennemies[i].EnnemyY, 5, 1, ennemies[i].EnnemyX, ennemies[i].EnnemyY + 1);     // descend the ship from one floor
-                        ennemies[i].EnnemyY++;
-                        ennemies[i].EnnemyDirection = !ennemies[i].EnnemyDirection;                                                     // Change the direction of the ship
+                        Console.MoveBufferArea(_ennemies[i].EnnemyX, _ennemies[i].EnnemyY, 5, 1, _ennemies[i].EnnemyX, _ennemies[i].EnnemyY + 1);     // descend the ship from one floor
+                        _ennemies[i].EnnemyY++;
+                        _ennemies[i].EnnemyDirection = !_ennemies[i].EnnemyDirection;                                                     // Change the direction of the ship
                     }
 
                     // If the lateral position is touching the right border of the window
-                    else if (ennemies[i].EnnemyX + 5 == Console.WindowWidth)
+                    else if (_ennemies[i].EnnemyX + 5 == Console.WindowWidth)
                     {
-                        Console.MoveBufferArea(ennemies[i].EnnemyX, ennemies[i].EnnemyY, 5, 1, ennemies[i].EnnemyX, ennemies[i].EnnemyY + 1);     // descend the ship from one floor
-                        ennemies[i].EnnemyY++;
-                        ennemies[i].EnnemyDirection = !ennemies[i].EnnemyDirection;                                                     // Change the direction of the ship
+                        Console.MoveBufferArea(_ennemies[i].EnnemyX, _ennemies[i].EnnemyY, 5, 1, _ennemies[i].EnnemyX, _ennemies[i].EnnemyY + 1);     // descend the ship from one floor
+                        _ennemies[i].EnnemyY++;
+                        _ennemies[i].EnnemyDirection = !_ennemies[i].EnnemyDirection;                                                     // Change the direction of the ship
                     }
 
                     // Else, move the ship to the left
-                    if (ennemies[i].EnnemyDirection == true && ennemies[i].EnnemyX != Console.WindowLeft)
+                    if (_ennemies[i].EnnemyDirection == true && _ennemies[i].EnnemyX != Console.WindowLeft)
                     {
-                        Console.MoveBufferArea(ennemies[i].EnnemyX, ennemies[i].EnnemyY, 5, 1, ennemies[i].EnnemyX - 1, ennemies[i].EnnemyY);
-                        ennemies[i].EnnemyX--;
+                        Console.MoveBufferArea(_ennemies[i].EnnemyX, _ennemies[i].EnnemyY, 5, 1, _ennemies[i].EnnemyX - 1, _ennemies[i].EnnemyY);
+                        _ennemies[i].EnnemyX--;
                     }
 
                     // Else, move the ship to the right
-                    else if (ennemies[i].EnnemyDirection == false && ennemies[i].EnnemyX + 5 != Console.WindowWidth)
+                    else if (_ennemies[i].EnnemyDirection == false && _ennemies[i].EnnemyX + 5 != Console.WindowWidth)
                     {
-                        Console.MoveBufferArea(ennemies[i].EnnemyX, ennemies[i].EnnemyY, 5, 1, ennemies[i].EnnemyX + 1, ennemies[i].EnnemyY);
-                        ennemies[i].EnnemyX++;
+                        Console.MoveBufferArea(_ennemies[i].EnnemyX, _ennemies[i].EnnemyY, 5, 1, _ennemies[i].EnnemyX + 1, _ennemies[i].EnnemyY);
+                        _ennemies[i].EnnemyX++;
                     }
+                    
                 }
-                else
+                if(_ennemies[i] != null)
                 {
-                    ennemies[i] = null;
-                }
-                if(ennemies[i] != null)
-                {
-                    if (i >= 15)
+                    if (i != 19 && i != 0 &&  (_ennemies[i + 1] != null || _ennemies[i - 1] != null))
                     {
-                        ennemies[i].Shoot = true;
-                    }
-                    // If the ship forward is destroy, so the ship beward can shoot
-                    else if (ennemies[i + 5] == null)
-                    {
-                        ennemies[i].Shoot = true;
+                        //if (_ennemies[i].EnnemyX == _ennemies[i + 1].EnnemyX || _ennemies[i].EnnemyX == _ennemies[i - 1].EnnemyX)
+                        //{
+                        //    _ennemies[i].Shoot = false;
+                        //}
+                        //else
+                        //{
+                        foreach(Ennemy ennemy in _ennemies)
+                        {
+
+                        }
+                            if (i >= 15)
+                            {
+                                _ennemies[i].Shoot = true;
+                            }
+                            // If the ship forward is destroy, so the ship beward can shoot
+                            else if (_ennemies[i + 5] == null)
+                            {
+                                _ennemies[i].Shoot = true;
+                            }
+                        //}
                     }
                 }
             }

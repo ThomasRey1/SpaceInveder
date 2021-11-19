@@ -28,29 +28,29 @@ namespace SpicyInvader
             int x = 0;
             for (int i = 0; i != 5; i++)
             {
-                Ennemy ennemy = new Ennemy(Console.WindowWidth / 3 + (6 * i), Console.WindowTop + 2, false, true, true, posXBunker);      // Create an ennemy
-                ennemies[x] = ennemy;
+                //Ennemy ennemy = new Ennemy(Console.WindowWidth / 3 + (6 * i), Console.WindowTop + 2, false, true, true, posXBunker);      // Create an ennemy
+                //ennemies[x] = ennemy;
                 x++;
                 System.Threading.Thread.Sleep(10);
             }
             for (int i = 0; i != 5; i++)
             {
-                Ennemy ennemy = new Ennemy(Console.WindowWidth / 3 + (6 * i), Console.WindowTop + 4, false, true, true, posXBunker);      // Create an ennemy
-                ennemies[x] = ennemy;
+                //Ennemy ennemy = new Ennemy(Console.WindowWidth / 3 + (6 * i), Console.WindowTop + 4, false, true, true, posXBunker);      // Create an ennemy
+                //ennemies[x] = ennemy;
                 x++;
                 System.Threading.Thread.Sleep(10);
             }
             for (int i = 0; i != 5; i++)
             {
-                Ennemy ennemy = new Ennemy(Console.WindowWidth / 3 + (6 * i), Console.WindowTop + 6, false, true, true, posXBunker);      // Create an ennemy
-                ennemies[x] = ennemy;
+                //Ennemy ennemy = new Ennemy(Console.WindowWidth / 3 + (6 * i), Console.WindowTop + 6, false, true, true, posXBunker);      // Create an ennemy
+                //ennemies[x] = ennemy;
                 x++;
                 System.Threading.Thread.Sleep(10);
             }
             for (int i = 0; i != 5; i++)
             {
-                Ennemy ennemy = new Ennemy(Console.WindowWidth / 3 + (6 * i), Console.WindowTop + 8, false, true, true, posXBunker);      // Create an ennemy
-                ennemies[x] = ennemy;
+                //Ennemy ennemy = new Ennemy(Console.WindowWidth / 3 + (6 * i), Console.WindowTop + 8, false, true, true, posXBunker);      // Create an ennemy
+                //ennemies[x] = ennemy;
                 x++;
                 System.Threading.Thread.Sleep(10);
             }

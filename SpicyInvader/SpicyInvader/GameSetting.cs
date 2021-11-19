@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Timers;
 
 namespace SpicyInvader
 {
@@ -16,13 +17,16 @@ namespace SpicyInvader
     public class GameSetting
     {
         // Property
-        public List<int> posXBunker = new List<int>();
+        private List<int> _posXBunker = new List<int>();
+        private Ennemy[] _ennemies = new Ennemy[20];
+        private PlayerShip player;
 
         //Getter - Setter
         /// <summary>
         /// Difficulty property definition
         /// </summary>
         public bool Difficulty { get; set; }            // The difficulty level
+
         /// <summary>
         /// SoundGame property definition
         /// </summary>
@@ -50,42 +54,46 @@ namespace SpicyInvader
 
                 for (int j = 0; j != 18; j++)
                 {
-                    posXBunker.Add(Console.WindowWidth / 4 * i - 23 + j);
+                    _posXBunker.Add(Console.WindowWidth / 4 * i - 23 + j);                                  // Save the position of the bunker
                 }
             }
-            Ennemy[] ennemies = new Ennemy[20];
+
+            player = new PlayerShip(Console.WindowWidth / 2 - 3, Console.WindowHeight - 2, SoundGame, _posXBunker, _ennemies);       // Create the player ship    
+
             int x = 0;
             for (int i = 0; i != 5; i++)
             {
-                Ennemy ennemy = new Ennemy(Console.WindowWidth / 3 + (6 * i), Console.WindowTop + 2, false, true, true, posXBunker);      // Create an ennemy
-                ennemies[x] = ennemy;
+                Ennemy ennemy = new Ennemy(Console.WindowWidth / 3 + (6 * i), Console.WindowTop + 2, SoundGame, true, true, _posXBunker, player);      // Create an ennemy
+                _ennemies[x] = ennemy;
                 x++;
                 System.Threading.Thread.Sleep(10);
             }
-            for (int i = 0; i != 5; i++)
-            {
-                Ennemy ennemy = new Ennemy(Console.WindowWidth / 3 + (6 * i), Console.WindowTop + 4, false, true, true, posXBunker);      // Create an ennemy
-                ennemies[x] = ennemy;
-                x++;
-                System.Threading.Thread.Sleep(10);
-            }
-            for (int i = 0; i != 5; i++)
-            {
-                Ennemy ennemy = new Ennemy(Console.WindowWidth / 3 + (6 * i), Console.WindowTop + 6, false, true, true, posXBunker);      // Create an ennemy
-                ennemies[x] = ennemy;
-                x++;
-                System.Threading.Thread.Sleep(10);
-            }
-            for (int i = 0; i != 5; i++)
-            {
-                Ennemy ennemy = new Ennemy(Console.WindowWidth / 3 + (6 * i), Console.WindowTop + 8, false, true, true, posXBunker);      // Create an ennemy
-                ennemies[x] = ennemy;
-                x++;
-                System.Threading.Thread.Sleep(10);
-            }
-            Move move = new Move(ennemies);
 
-            PlayerShip player = new PlayerShip(Console.WindowWidth / 2 - 3, Console.WindowHeight - 2, SoundGame, posXBunker);       // Create the player ship
+            for (int i = 0; i != 5; i++)
+            {
+                Ennemy ennemy = new Ennemy(Console.WindowWidth / 3 + (6 * i), Console.WindowTop + 4, SoundGame, true, true, _posXBunker, player);      // Create an ennemy
+                _ennemies[x] = ennemy;
+                x++;
+                System.Threading.Thread.Sleep(10);
+            }
+
+            for (int i = 0; i != 5; i++)
+            {
+                Ennemy ennemy = new Ennemy(Console.WindowWidth / 3 + (6 * i), Console.WindowTop + 6, SoundGame, true, true, _posXBunker, player);      // Create an ennemy
+                _ennemies[x] = ennemy;
+                x++;
+                System.Threading.Thread.Sleep(10);
+            }
+
+            for (int i = 0; i != 5; i++)
+            {
+                Ennemy ennemy = new Ennemy(Console.WindowWidth / 3 + (6 * i), Console.WindowTop + 8, SoundGame, true, true, _posXBunker, player);      // Create an ennemy
+                _ennemies[x] = ennemy;
+                x++;
+                System.Threading.Thread.Sleep(10);
+            }
+
+            Move move = new Move(_ennemies);   
             player.ShipAction();
         }
     }

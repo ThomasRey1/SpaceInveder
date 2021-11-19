@@ -18,9 +18,10 @@ namespace SpicyInvader
     {
         //Properties
         private int _shipLife = 3;              // The limit life of the player
-        private string _shipForm = "├─┴─┤";     // The shap of the player's ship
+        public string _shipForm = "├─┴─┤";     // The shap of the player's ship
         private bool _gamePause = false;        // Check if the game is in pause
         private const byte _shipSpeed = 1;      // The ship movement speed
+        private Ennemy[] _ennemies;
 
         //Getter - Setter
         /// <summary>
@@ -43,18 +44,20 @@ namespace SpicyInvader
         /// </summary>
         public List<int> PosXBunker { get; set; }                           // Postition of the bunker
 
+
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="shipX">The lateral position of the ship</param>
         /// <param name="shipY">The vertical position of the ship</param>
         /// <param name="soundGame">The sound is ON or OFF</param>
-        public PlayerShip(int shipX, int shipY, bool soundGame, List<int> posXBunker)
+        public PlayerShip(int shipX, int shipY, bool soundGame, List<int> posXBunker, Ennemy[] ennemies)
         {
             this.ShipX = shipX;
             this.ShipY = shipY;
             this.SoundGame = soundGame;
             this.PosXBunker = posXBunker;
+            this._ennemies = ennemies;
             Console.SetCursorPosition(ShipX, ShipY);
             Console.Write(_shipForm);
         }
@@ -67,7 +70,7 @@ namespace SpicyInvader
         /// </summary>
         public void ShipAction()
         {
-            Missile missilePlayer = new Missile(ShipX + (_shipForm.Length / 2), ShipY - 1, _gamePause, false, PosXBunker) ; // Create a missile
+            Missile missilePlayer = new Missile(ShipX + (_shipForm.Length / 2), ShipY - 1, _gamePause, false, PosXBunker, _ennemies) ; // Create a missile
             short GetAsyncKeyStateResult = GetAsyncKeyState(32); // Result of the keyboard key pressed
             do
             {
@@ -115,9 +118,9 @@ namespace SpicyInvader
                         GetAsyncKeyStateResult = GetAsyncKeyState(37); // Initialize the GetAsynKeyState in left arrow
                     }
                     // If the key pressed is the right arrow
-                    else if (key.Key == ConsoleKey.RightArrow) // Initialize the GetAsynKeyState in right arrow
+                    else if (key.Key == ConsoleKey.RightArrow) 
                     {
-                        GetAsyncKeyStateResult = GetAsyncKeyState(39);
+                        GetAsyncKeyStateResult = GetAsyncKeyState(39); // Initialize the GetAsynKeyState in right arrow
                     }
                     // If the key pressed is the space bar
                     else if (key.Key == ConsoleKey.Spacebar)
