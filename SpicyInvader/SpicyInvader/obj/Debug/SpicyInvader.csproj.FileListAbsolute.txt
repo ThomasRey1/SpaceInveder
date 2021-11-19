@@ -1,0 +1,21 @@
+C:\Users\thorey\Documents\SpicyInvader\SpicyInvader\bin\Debug\SpicyInvader.exe.config
+C:\Users\thorey\Documents\SpicyInvader\SpicyInvader\bin\Debug\SpicyInvader.exe
+C:\Users\thorey\Documents\SpicyInvader\SpicyInvader\bin\Debug\SpicyInvader.pdb
+C:\Users\thorey\Documents\SpicyInvader\SpicyInvader\obj\Debug\SpicyInvader.csprojAssemblyReference.cache
+C:\Users\thorey\Documents\SpicyInvader\SpicyInvader\obj\Debug\SpicyInvader.csproj.CoreCompileInputs.cache
+C:\Users\thorey\Documents\SpicyInvader\SpicyInvader\obj\Debug\SpicyInvader.exe
+C:\Users\thorey\Documents\SpicyInvader\SpicyInvader\obj\Debug\SpicyInvader.pdb
+C:\Users\thorey\Desktop\SpicyInvader\SpicyInvader\obj\Debug\SpicyInvader.csproj.CoreCompileInputs.cache
+C:\Users\thorey\Desktop\SpicyInvader\SpicyInvader\obj\Debug\SpicyInvader.exe
+C:\Users\thorey\Desktop\SpicyInvader\SpicyInvader\obj\Debug\SpicyInvader.pdb
+C:\Users\thorey\Desktop\SpicyInvader\SpicyInvader\bin\Debug\SpicyInvader.exe.config
+C:\Users\thorey\Desktop\SpicyInvader\SpicyInvader\bin\Debug\SpicyInvader.exe
+C:\Users\thorey\Desktop\SpicyInvader\SpicyInvader\bin\Debug\SpicyInvader.pdb
+F:\année 2\Semestre1\P.Chenaux\P_Dev\SpicyInvader\SpicyInvader\bin\Debug\SpicyInvader.exe.config
+F:\année 2\Semestre1\P.Chenaux\P_Dev\SpicyInvader\SpicyInvader\bin\Debug\SpicyInvader.exe
+F:\année 2\Semestre1\P.Chenaux\P_Dev\SpicyInvader\SpicyInvader\bin\Debug\SpicyInvader.pdb
+F:\année 2\Semestre1\P.Chenaux\P_Dev\SpicyInvader\SpicyInvader\obj\Debug\SpicyInvader.csprojAssemblyReference.cache
+F:\année 2\Semestre1\P.Chenaux\P_Dev\SpicyInvader\SpicyInvader\obj\Debug\SpicyInvader.csproj.CoreCompileInputs.cache
+F:\année 2\Semestre1\P.Chenaux\P_Dev\SpicyInvader\SpicyInvader\obj\Debug\SpicyInvader.exe
+F:\année 2\Semestre1\P.Chenaux\P_Dev\SpicyInvader\SpicyInvader\obj\Debug\SpicyInvader.pdb
+C:\Users\thorey\Desktop\SpicyInvader\SpicyInvader\obj\Debug\SpicyInvader.csproj.AssemblyReference.cache
