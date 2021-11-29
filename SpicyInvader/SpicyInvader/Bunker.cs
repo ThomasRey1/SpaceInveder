@@ -14,7 +14,11 @@ namespace SpicyInvader
     /// </summary>
     class Bunker
     {
-        
+        #region Method
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="decalage">Offset between each bunker</param>
         public Bunker(int decalage)
         {
             Console.SetCursorPosition(Console.WindowWidth / 4 * decalage - 23, 20);
@@ -29,5 +33,6 @@ namespace SpicyInvader
             //Console.SetCursorPosition(Console.WindowWidth / 4 * decalage - 23, 23);
             //Console.WriteLine("██            ██");
         }
+        #endregion
     }
 }

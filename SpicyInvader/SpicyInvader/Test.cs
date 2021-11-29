@@ -24,7 +24,7 @@ namespace SpicyInvader
                     posXBunker.Add(Console.WindowWidth / 4 * i - 23 + j);
                 }
             }
-            Ennemy[] ennemies = new Ennemy[20];
+            Enemy[] ennemies = new Enemy[20];
             int x = 0;
             for (int i = 0; i != 5; i++)
             {

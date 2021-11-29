@@ -14,6 +14,7 @@ namespace SpicyInvader
     /// </summary>
     public class Sound
     {
+        #region Method
         /// <summary>
         /// Play the main music
         /// </summary>
@@ -47,5 +48,6 @@ namespace SpicyInvader
                 
             }
         }
+        #endregion
     }
 }

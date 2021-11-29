@@ -14,6 +14,7 @@ namespace SpicyInvader
     /// </summary>
     class Program
     {
+        #region Method
         /// <summary>
         /// Execute the different choice of the player
         /// </summary>
@@ -22,11 +23,13 @@ namespace SpicyInvader
         {
             //test test = new test();
             //Console.Read();
+            #region Properties
             // Properties
             byte choice = 1;                // The choice option of the player
             bool redo = true;               // Redo a while loop until the player choose an option
             bool soundGame = true;          // The sound is ON or OFF
             bool difficulty = false;        // The difficulty level
+            #endregion
 
             Sound.SoundMenu(soundGame);
 
@@ -38,9 +41,10 @@ namespace SpicyInvader
                 Console.Clear();
                 if (choice == 1)
                 {
+                    Console.WindowHeight = 36;
                     GameSetting NewGame = new GameSetting(difficulty, soundGame);
                     NewGame.GameStarted();
-
+                    NewGame = null;
                 }
                 else if (choice == 2)
                 {
@@ -70,9 +74,11 @@ namespace SpicyInvader
         /// <returns></returns>
         static byte Show(ref byte S_option)
         {
+            #region Properties
             bool main = true;           // While loop for choose the option
             ConsoleKeyInfo keyInfo;     // Check the key than the player touch
             string middle = "";         // Margin the contents
+            #endregion
 
             for (int i = 0; i != 44; i++)
             {
@@ -171,10 +177,12 @@ namespace SpicyInvader
         /// <param name="C_difficulty">Change the difficult mode</param>
         static void Configure(ref bool C_soundGame, ref bool C_difficulty)
         {
+            #region Properties
             bool main = true;           // While loop for choose the option
             ConsoleKeyInfo keyInfo;     // Check the key than the player touch
             string middle = "";         // Margin the contents
             byte option = 1;            // The choice option of the player
+            #endregion
 
             for (int i = 0; i != 44; i++)
             {
@@ -285,5 +293,6 @@ namespace SpicyInvader
             }
             while (main);
         }
+        #endregion
     }
 }

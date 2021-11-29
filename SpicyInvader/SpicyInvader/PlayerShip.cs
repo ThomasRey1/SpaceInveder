@@ -16,13 +16,17 @@ namespace SpicyInvader
     /// </summary>
     public class PlayerShip
     {
+        #region Properties
         //Properties
-        private int _shipLife = 3;              // The limit life of the player
-        public string _shipForm = "├─┴─┤";     // The shap of the player's ship
+        private byte _shipLife = 3;             // The limit life of the player
+        public string _shipForm = "├─┴─┤";      // The shap of the player's ship
         private bool _gamePause = false;        // Check if the game is in pause
         private const byte _shipSpeed = 1;      // The ship movement speed
-        private Ennemy[] _ennemies;
+        private Enemy[] _enemies;             // List of enemies
+        private bool _over = false;             // Check if the game is over or not
+        #endregion
 
+        #region Getter - Setter
         //Getter - Setter
         /// <summary>
         /// ShipX property definition
@@ -44,20 +48,31 @@ namespace SpicyInvader
         /// </summary>
         public List<int> PosXBunker { get; set; }                           // Postition of the bunker
 
+        /// <summary>
+        /// ShipLife property definition
+        /// </summary>
+        public byte ShipLife
+        {
+            get { return _shipLife; }
 
+            set { _shipLife = value; }
+        }
+        #endregion
+
+        #region Method
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="shipX">The lateral position of the ship</param>
         /// <param name="shipY">The vertical position of the ship</param>
         /// <param name="soundGame">The sound is ON or OFF</param>
-        public PlayerShip(int shipX, int shipY, bool soundGame, List<int> posXBunker, Ennemy[] ennemies)
+        public PlayerShip(int shipX, int shipY, bool soundGame, List<int> posXBunker, Enemy[] enemies)
         {
             this.ShipX = shipX;
             this.ShipY = shipY;
             this.SoundGame = soundGame;
             this.PosXBunker = posXBunker;
-            this._ennemies = ennemies;
+            this._enemies = enemies;
             Console.SetCursorPosition(ShipX, ShipY);
             Console.Write(_shipForm);
         }
@@ -68,9 +83,9 @@ namespace SpicyInvader
         /// <summary>
         /// Allows the player to move and shoot with the ship and to pause the game
         /// </summary>
-        public void ShipAction()
+        public void ShipAction(Move move)
         {
-            Missile missilePlayer = new Missile(ShipX + (_shipForm.Length / 2), ShipY - 1, _gamePause, false, PosXBunker, _ennemies) ; // Create a missile
+            Missile missilePlayer = new Missile(1, 1, _gamePause, false, PosXBunker, _enemies) ; // Create a missile
             short GetAsyncKeyStateResult = GetAsyncKeyState(32); // Result of the keyboard key pressed
             do
             {
@@ -118,7 +133,7 @@ namespace SpicyInvader
                         GetAsyncKeyStateResult = GetAsyncKeyState(37); // Initialize the GetAsynKeyState in left arrow
                     }
                     // If the key pressed is the right arrow
-                    else if (key.Key == ConsoleKey.RightArrow) 
+                    else if (key.Key == ConsoleKey.RightArrow)
                     {
                         GetAsyncKeyStateResult = GetAsyncKeyState(39); // Initialize the GetAsynKeyState in right arrow
                     }
@@ -142,60 +157,37 @@ namespace SpicyInvader
                         // The game is in pause
                         _gamePause = !_gamePause;
                         missilePlayer.MissilePause = _gamePause;
+                        move.StopMove();
+                        foreach(Enemy x in _enemies)
+                        {
+                            if(x != null)
+                            {
+                                x.StopShoot();
+                            }
+                        }
                     }
                 }
-                //Utilisateur a appuyé sur une touche ?
-                //if (Console.KeyAvailable)
-                //{
-                //    ConsoleKeyInfo key = Console.ReadKey(true);
-
-                //    switch (key.Key)
-                //    {
-                //        //Touche fléchée gauche
-                //        case ConsoleKey.LeftArrow:
-                //            if (gamePause == false)
-                //            {
-                //                //Décalage de la position de référence
-                //                if (ShipX != Console.WindowLeft)
-                //                {
-                //                    ShipX--;
-                //                    Console.MoveBufferArea(ShipX + 1, ShipY, shipForm.Length, 1, ShipX, ShipY);
-                //                }
-                //                else { }
-                //            }
-                //            break;
-
-                //        case ConsoleKey.RightArrow:
-                //            if (gamePause == false)
-                //            {
-                //                //Décalage de la position de référence
-                //                if (ShipX + shipForm.Length != Console.WindowWidth)
-                //                {
-                //                    ShipX++;
-                //                    Console.MoveBufferArea(ShipX - 1, ShipY, shipForm.Length, 1, ShipX, ShipY);
-                //                }
-                //                else { }
-                //            }
-                //            break;
-
-                //        case ConsoleKey.Spacebar:
-                //            if (missilePlayer.MissileLive == false)
-                //            {
-                //                missilePlayer.MissileLive = true;
-                //                missilePlayer.MissileY = ShipY - 1;
-                //                missilePlayer.MissileX = ShipX + (shipForm.Length / 2);
-                //                shoot.Interval = 50;
-                //                shoot.Enabled = true;
-                //            }
-                //            break;
-                //        case ConsoleKey.P:
-                //            gamePause = !gamePause;
-                //            missilePlayer.MissilePause = gamePause;
-                //            break;
-                //    }
-                //}
+                if(_shipLife == 0)
+                {
+                    _over = true;
+                }
+                byte i = 0;
+                foreach(Enemy x in _enemies)
+                {
+                    if (x != null)
+                    {
+                        i++;
+                    }
+                }
+                if(i == 0)
+                {
+                    _over = true;
+                }
+                i = 0;
             }
-            while (_shipLife > 0);
+            while (_over == false);
+            missilePlayer.StopShoot();
         }
+        #endregion
     }
 }
