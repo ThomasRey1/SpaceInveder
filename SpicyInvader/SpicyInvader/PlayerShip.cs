@@ -18,7 +18,6 @@ namespace SpicyInvader
     {
         #region Properties
         //Properties
-        public string _shipForm = "├─┴─┤";      // The shap of the player's ship
         private bool _gamePause = false;        // Check if the game is in pause
         private const byte _shipSpeed = 1;      // The ship movement speed
         private Enemy[] _enemies;               // List of enemies
@@ -27,6 +26,11 @@ namespace SpicyInvader
 
         #region Getter - Setter
         //Getter - Setter
+        /// <summary>
+        /// ShipForm property definition
+        /// </summary>
+        public string ShipForm { get; }                     // The shap of the player's ship
+
         /// <summary>
         /// ShipX property definition
         /// </summary>
@@ -60,7 +64,7 @@ namespace SpicyInvader
         /// <summary>
         /// MissilePlayer preperty definition
         /// </summary>
-        public Missile MissilePlayer { get; set; }                              // Create a missile
+        public Missile MissilePlayer { get; set; }          // Create a missile
         #endregion
 
         #region Method
@@ -72,6 +76,7 @@ namespace SpicyInvader
         /// <param name="soundGame">The sound is ON or OFF</param>
         public PlayerShip(int shipX, int shipY, bool soundGame, List<int> posXBunker, Enemy[] enemies)
         {
+            ShipForm = "├─┴─┤";
             this.ShipX = shipX;
             this.ShipY = shipY;
             this.SoundGame = soundGame;
@@ -81,7 +86,7 @@ namespace SpicyInvader
             this.Score = 0;
             this.MissilePlayer = new Missile(1, 1, _gamePause, false, PosXBunker, _enemies);
             Console.SetCursorPosition(ShipX, ShipY);
-            Console.Write(_shipForm);
+            Console.Write(ShipForm);
         }
 
         [DllImport("User32.dll")]                       // Import the User32.dll
@@ -107,7 +112,7 @@ namespace SpicyInvader
                         if (ShipX != Console.WindowLeft)
                         {
                             ShipX--;
-                            Console.MoveBufferArea(ShipX + 1, ShipY, _shipForm.Length, 1, ShipX, ShipY); // Move the ship to the left
+                            Console.MoveBufferArea(ShipX + 1, ShipY, ShipForm.Length, 1, ShipX, ShipY); // Move the ship to the left
                         }
                         // Else do nothing
                         else { }
@@ -121,10 +126,10 @@ namespace SpicyInvader
                     if (_gamePause == false)
                     {
                         // If the lateral position plus the lenght of the ship is not touching the right border of the window
-                        if (ShipX + _shipForm.Length != Console.WindowWidth)
+                        if (ShipX + ShipForm.Length != Console.WindowWidth)
                         {
                             ShipX++;
-                            Console.MoveBufferArea(ShipX - 1, ShipY, _shipForm.Length, 1, ShipX, ShipY); // Move the ship to the right
+                            Console.MoveBufferArea(ShipX - 1, ShipY, ShipForm.Length, 1, ShipX, ShipY); // Move the ship to the right
                         }
                         // Else do nothing
                         else { }
@@ -155,7 +160,7 @@ namespace SpicyInvader
                             MissilePlayer.MissileLive = true;
                             // Reposition the location of the missile
                             MissilePlayer.MissileY = ShipY - 1;
-                            MissilePlayer.MissileX = ShipX + (_shipForm.Length / 2);
+                            MissilePlayer.MissileX = ShipX + (ShipForm.Length / 2);
                             MissilePlayer.MissilePlayerCreate();
                         }
                     }

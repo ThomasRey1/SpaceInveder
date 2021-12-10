@@ -81,7 +81,7 @@ namespace SpicyInvader
             string middle = "";         // Margin the contents
             #endregion
 
-            for (int i = 0; i != 44; i++)
+            for (int i = 0; i != Console.WindowWidth / 2 - 13; i++)
             {
                 middle += " ";
             }

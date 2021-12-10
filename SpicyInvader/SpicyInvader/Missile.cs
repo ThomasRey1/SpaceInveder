@@ -162,7 +162,7 @@ namespace SpicyInvader
                             Enemies[i] = null;
                             MissileY = Console.WindowTop;
                             Player.Score += 100;
-                            Console.SetCursorPosition(Console.WindowWidth / 3 + 8, Console.WindowHeight - 3);
+                            Console.SetCursorPosition(Console.WindowWidth / 2 + 3, Console.WindowHeight - 3);
                             Console.Write(Player.Score);
                         }
                     }
@@ -225,11 +225,11 @@ namespace SpicyInvader
                 // Check if the missile touch a pixel of the player
                 if (MissileY == Player.ShipY - 1)
                 {
-                    if (MissileX >= Player.ShipX && MissileX <= Player.ShipX + Player._shipForm.Length - 1)
+                    if (MissileX >= Player.ShipX && MissileX <= Player.ShipX + Player.ShipForm.Length - 1)
                     {
                         Console.MoveBufferArea(1, 1, 1, 1, MissileX, MissileY);
                         MissileY = Console.WindowHeight;
-                        Console.MoveBufferArea(1, 1, 2, 1, Console.WindowLeft + 11 - (6 / Player.ShipLife), Console.WindowHeight - 3);
+                        Console.MoveBufferArea(1, 1, 2, 1, Console.WindowLeft + 21 - (6 / Player.ShipLife), Console.WindowHeight - 3);
                         Player.ShipLife -= 1;
                         shootEnemy.Stop();
                     }

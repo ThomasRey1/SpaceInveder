@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace SpicyInvader
 {
@@ -22,6 +23,7 @@ namespace SpicyInvader
         private PlayerShip player;                          // The player ship
         private Move move;                                  // Move the enemies ship
         private int score = 0;                              // The score of the game
+        private int stage = 0;                              // The current stage whre is the player
         #endregion
 
         #region Getter - Setter
@@ -71,18 +73,20 @@ namespace SpicyInvader
             {
                 Console.Write("─");
             }
-            Console.SetCursorPosition(Console.WindowLeft, Console.WindowHeight - 3);
+            Console.SetCursorPosition(Console.WindowLeft + 10, Console.WindowHeight - 3);
             Console.Write("Vie : ♥ ♥ ♥");
-            Console.SetCursorPosition(Console.WindowWidth / 3, Console.WindowHeight - 3);
-            Console.Write("Score : 0");
+            Console.SetCursorPosition(Console.WindowWidth / 2 - 5, Console.WindowHeight - 3);
+            Console.Write("Score : {0}", score);
+            Console.SetCursorPosition(Console.WindowWidth - 20, Console.WindowHeight - 3);
+            Console.Write("Stage : {0}", stage);
 
             move = new Move(_enemies);   
             player.ShipAction(move);
 
-
             bool redo = true;
             while (redo)
             {
+                Thread.Sleep(50);
                 if (player.ShipLife == 0)
                 {
                     Console.Clear();
@@ -109,9 +113,16 @@ namespace SpicyInvader
                         }
                         _enemies[i] = null;
                     }
-                    move.StopMove();
                     move = null;
+
+                    Console.MoveBufferArea(player.ShipX, player.ShipY, player.ShipForm.Length, 1, Console.WindowWidth / 2 - 3, Console.WindowHeight - 7);
                     player.ShipX = Console.WindowWidth / 2 - 3;
+                    Console.SetCursorPosition(player.ShipX, player.ShipY);
+                    Console.Write(player.ShipForm);
+                    stage++;
+                    Console.SetCursorPosition(Console.WindowWidth - 12, Console.WindowHeight - 3);
+                    Console.Write(stage);
+
                     CreatEnemy();
                     move = new Move(_enemies);
                     player.ShipAction(move);
@@ -128,7 +139,7 @@ namespace SpicyInvader
                 Enemy enemy = new Enemy(Console.WindowWidth / 3 + (6 * i), Console.WindowTop + 2, SoundGame, true, true, _posXBunker, player);      // Create an enemy
                 _enemies[x] = enemy;
                 x++;
-                System.Threading.Thread.Sleep(100);
+                Thread.Sleep(100);
             }
 
             for (int i = 0; i != 5; i++)
@@ -136,7 +147,7 @@ namespace SpicyInvader
                 Enemy enemy = new Enemy(Console.WindowWidth / 3 + (6 * i), Console.WindowTop + 4, SoundGame, true, true, _posXBunker, player);      // Create an enemy
                 _enemies[x] = enemy;
                 x++;
-                System.Threading.Thread.Sleep(100);
+                Thread.Sleep(100);
             }
 
             for (int i = 0; i != 5; i++)
@@ -152,7 +163,7 @@ namespace SpicyInvader
                 Enemy enemy = new Enemy(Console.WindowWidth / 3 + (6 * i), Console.WindowTop + 8, SoundGame, true, true, _posXBunker, player);      // Create an enemy
                 _enemies[x] = enemy;
                 x++;
-                System.Threading.Thread.Sleep(100);
+                Thread.Sleep(100);
             }
         }
         #endregion

@@ -100,7 +100,7 @@ namespace SpicyInvader
                 }
                 if(_enemies[i] != null)
                 {
-                    if (i != 19 && i != 0 &&  (_enemies[i + 1] != null || _enemies[i - 1] != null))
+                    if (i != _enemies.Length - 1 && i != 0 &&  (_enemies[i + 1] != null || _enemies[i - 1] != null))
                     {
                         if (i >= 15)
                         {
