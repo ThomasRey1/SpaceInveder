@@ -111,7 +111,7 @@ namespace SpicyInvader
                     }
                     move.StopMove();
                     move = null;
-
+                    player.ShipX = Console.WindowWidth / 2 - 3;
                     CreatEnemy();
                     move = new Move(_enemies);
                     player.ShipAction(move);
@@ -131,29 +131,29 @@ namespace SpicyInvader
                 System.Threading.Thread.Sleep(100);
             }
 
-            //for (int i = 0; i != 5; i++)
-            //{
-            //    Enemy enemy = new Enemy(Console.WindowWidth / 3 + (6 * i), Console.WindowTop + 4, SoundGame, true, true, _posXBunker, player);      // Create an enemy
-            //    _enemies[x] = enemy;
-            //    x++;
-            //    System.Threading.Thread.Sleep(100);
-            //}
+            for (int i = 0; i != 5; i++)
+            {
+                Enemy enemy = new Enemy(Console.WindowWidth / 3 + (6 * i), Console.WindowTop + 4, SoundGame, true, true, _posXBunker, player);      // Create an enemy
+                _enemies[x] = enemy;
+                x++;
+                System.Threading.Thread.Sleep(100);
+            }
 
-            //for (int i = 0; i != 5; i++)
-            //{
-            //    Enemy enemy = new Enemy(Console.WindowWidth / 3 + (6 * i), Console.WindowTop + 6, SoundGame, true, true, _posXBunker, player);      // Create an enemy
-            //    _enemies[x] = enemy;
-            //    x++;
-            //    System.Threading.Thread.Sleep(100);
-            //}
+            for (int i = 0; i != 5; i++)
+            {
+                Enemy enemy = new Enemy(Console.WindowWidth / 3 + (6 * i), Console.WindowTop + 6, SoundGame, true, true, _posXBunker, player);      // Create an enemy
+                _enemies[x] = enemy;
+                x++;
+                System.Threading.Thread.Sleep(100);
+            }
 
-            //for (int i = 0; i != 5; i++)
-            //{
-            //    Enemy enemy = new Enemy(Console.WindowWidth / 3 + (6 * i), Console.WindowTop + 8, SoundGame, true, true, _posXBunker, player);      // Create an enemy
-            //    _enemies[x] = enemy;
-            //    x++;
-            //    System.Threading.Thread.Sleep(100);
-            //}
+            for (int i = 0; i != 5; i++)
+            {
+                Enemy enemy = new Enemy(Console.WindowWidth / 3 + (6 * i), Console.WindowTop + 8, SoundGame, true, true, _posXBunker, player);      // Create an enemy
+                _enemies[x] = enemy;
+                x++;
+                System.Threading.Thread.Sleep(100);
+            }
         }
         #endregion
     }

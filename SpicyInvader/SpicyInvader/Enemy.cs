@@ -20,8 +20,7 @@ namespace SpicyInvader
         //Properties
         public string _shipForm = "■─▬─■";                                  // The shap of the enemy's ship
         private bool _gamePause = false;                                    // Check if the game is in pause
-        private Missile missileEnemy = new Missile(1, 29, false);          // Create a missile
-        private Timer enemyShooting = new Timer(1000);                     // Loop to shoot a missile
+        private Timer _enemyShooting = new Timer(1000);                     // Loop to shoot a missile
         #endregion
 
         #region Getter - Setter
@@ -29,28 +28,28 @@ namespace SpicyInvader
         /// <summary>
         /// EnemyDirection property definition
         /// </summary>
-        public bool EnemyDirection { get; set; }                          // The direction of the movement of the ship
+        public bool EnemyDirection { get; set; }                            // The direction of the movement of the ship
 
         /// <summary>
         /// EnemyX property definition
         /// </summary>
-        public int EnemyX { get; set; }                                   // The lateral position of the ship
+        public int EnemyX { get; set; }                                     // The lateral position of the ship
 
         /// <summary>
         /// EnemyY property definition
         /// </summary>
-        public int EnemyY { get; set; }                                   // The vertical position of the ship
+        public int EnemyY { get; set; }                                     // The vertical position of the ship
 
 
         /// <summary>
         /// SoundGame property definition
         /// </summary>
-        public bool SoundGame { get; set; }                                // The sound is ON or OFF
+        public bool SoundGame { get; set; }                                 // The sound is ON or OFF
 
         /// <summary>
         /// ShipEnemyLive property definition
         /// </summary>
-        public bool ShipEnemyLive { get; set; }                           // The life of the ship
+        public bool ShipEnemyLive { get; set; }                             // The life of the ship
 
         /// <summary>
         /// PosXBunker property definition
@@ -60,7 +59,12 @@ namespace SpicyInvader
         /// <summary>
         /// Shoot property definition
         /// </summary>
-        public bool Shoot { get; set; }                                   // If the enemy can shoot
+        public bool Shoot { get; set; }                                     // If the enemy can shoot
+
+        /// <summary>
+        /// MissileEnemy property definition
+        /// </summary>
+        public Missile MissileEnemy { get; set; }                           // Create a missile
         #endregion
 
         #region Method
@@ -77,14 +81,15 @@ namespace SpicyInvader
             this.SoundGame = soundGame;
             this.EnemyDirection = enemyDirection;
             this.ShipEnemyLive = shipEnemyLive;
-            missileEnemy.PosXBunker = posXBunker;
-            missileEnemy.Player = player;
+            this.MissileEnemy = new Missile(1, 29, false);
+            MissileEnemy.PosXBunker = posXBunker;
+            MissileEnemy.Player = player;
 
             Console.SetCursorPosition(EnemyX, EnemyY);    // Position the cursor to the ship coordinate
             Console.Write(_shipForm);
 
-            enemyShooting.Elapsed += new ElapsedEventHandler(EnemyShoot);
-            enemyShooting.Start();
+            _enemyShooting.Elapsed += new ElapsedEventHandler(EnemyShoot);
+            _enemyShooting.Start();
         }
         public void EnemyShoot(object source, ElapsedEventArgs e)
         {
@@ -96,32 +101,30 @@ namespace SpicyInvader
                 if (shoot.Next(0, 5) == 0 && Shoot == true)
                 {
                     Sound.SoundShipShoot(SoundGame); // Play the shoot sound
-                    missileEnemy.MissileLive = true;
-                    missileEnemy.MissileY = this.EnemyY + 1;
-                    missileEnemy.MissileX = this.EnemyX + _shipForm.Length / 2;
-                    missileEnemy.MissileEnemyCreate();
+                    MissileEnemy.MissileLive = true;
+                    MissileEnemy.MissileY = this.EnemyY + 1;
+                    MissileEnemy.MissileX = this.EnemyX + _shipForm.Length / 2;
+                    MissileEnemy.MissileEnemyCreate();
                 }
             }
         }
         public void StopShoot()
         {
-            if(enemyShooting.Enabled == true)
+            if(_enemyShooting.Enabled == true)
             {
-                enemyShooting.Stop();
+                _enemyShooting.Stop();
             }
             else
             {
-                enemyShooting.Start();
+                _enemyShooting.Start();
             }
-            missileEnemy.StopShoot();
         }
 
         public void Dead()
         {
-            enemyShooting.Stop();
-            missileEnemy.StopShoot();
-            Console.MoveBufferArea(1, 1, 1, 1, missileEnemy.MissileX, missileEnemy.MissileY);
-            missileEnemy = null;
+            _enemyShooting.Stop();
+            Console.MoveBufferArea(0, 0, 1, 1, MissileEnemy.MissileX, MissileEnemy.MissileY);
+            MissileEnemy = null;
         }
         #endregion
     }

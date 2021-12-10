@@ -6,8 +6,8 @@
  */
 
 using System;
-using System.Runtime.InteropServices;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 namespace SpicyInvader
 {
@@ -23,7 +23,6 @@ namespace SpicyInvader
         private const byte _shipSpeed = 1;      // The ship movement speed
         private Enemy[] _enemies;               // List of enemies
         private bool _over = false;             // Check if the game is over or not
-        Missile missilePlayer;                  // Create a missile
         #endregion
 
         #region Getter - Setter
@@ -57,6 +56,11 @@ namespace SpicyInvader
         /// Score property definition
         /// </summary>
         public int Score { get; set; }                      // Score of the game
+
+        /// <summary>
+        /// MissilePlayer preperty definition
+        /// </summary>
+        public Missile MissilePlayer { get; set; }                              // Create a missile
         #endregion
 
         #region Method
@@ -75,7 +79,7 @@ namespace SpicyInvader
             this._enemies = enemies;
             this.ShipLife = 3;
             this.Score = 0;
-            this.missilePlayer = new Missile(1, 1, _gamePause, false, PosXBunker, _enemies);
+            this.MissilePlayer = new Missile(1, 1, _gamePause, false, PosXBunker, _enemies);
             Console.SetCursorPosition(ShipX, ShipY);
             Console.Write(_shipForm);
         }
@@ -89,7 +93,7 @@ namespace SpicyInvader
         public void ShipAction(Move move)
         {
             _over = false;
-            missilePlayer.Player = this;
+            MissilePlayer.Player = this;
             short GetAsyncKeyStateResult = GetAsyncKeyState(32); // Result of the keyboard key pressed
             do
             {
@@ -145,14 +149,14 @@ namespace SpicyInvader
                     else if (key.Key == ConsoleKey.Spacebar)
                     {
                         // Check if a missile is already launched
-                        if (missilePlayer.MissileLive == false)
+                        if (MissilePlayer.MissileLive == false)
                         {
                             Sound.SoundShipShoot(SoundGame); // Play the shoot sound
-                            missilePlayer.MissileLive = true;
+                            MissilePlayer.MissileLive = true;
                             // Reposition the location of the missile
-                            missilePlayer.MissileY = ShipY - 1;
-                            missilePlayer.MissileX = ShipX + (_shipForm.Length / 2);
-                            missilePlayer.MissilePlayerCreate();
+                            MissilePlayer.MissileY = ShipY - 1;
+                            MissilePlayer.MissileX = ShipX + (_shipForm.Length / 2);
+                            MissilePlayer.MissilePlayerCreate();
                         }
                     }
                     // If the key pressed is the P
@@ -160,7 +164,7 @@ namespace SpicyInvader
                     {
                         // The game is in pause
                         _gamePause = !_gamePause;
-                        missilePlayer.MissilePause = _gamePause;
+                        MissilePlayer.MissilePause = _gamePause;
                         move.StopMove();
                         foreach(Enemy x in _enemies)
                         {
@@ -190,7 +194,7 @@ namespace SpicyInvader
                 i = 0;
             }
             while (_over == false);
-            missilePlayer.StopShoot();
+            MissilePlayer.StopShoot();
         }
         #endregion
     }

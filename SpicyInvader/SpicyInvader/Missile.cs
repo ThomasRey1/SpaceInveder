@@ -19,8 +19,8 @@ namespace SpicyInvader
         #region Properties
         //Properties
         private string _missileShap = "|";              // The missile form
-        private Timer shootEnemy = new Timer(100);     // Loop to lower the enemy missiles
-        private Timer shootPlayer = new Timer(100);     // Loop to lower the player missiles
+        private Timer shootEnemy = new Timer(50);      // Loop to lower the enemy missiles
+        private Timer shootPlayer = new Timer(50);     // Loop to lower the player missiles
         #endregion
 
         #region Getter - Setter
@@ -77,6 +77,7 @@ namespace SpicyInvader
             this.MissilePause = missilePause;
             this.PosXBunker = posXBunker;
             this.Enemies = enemies;
+            shootEnemy = null;
             SetTimerPlayer();
         }
 
@@ -91,6 +92,7 @@ namespace SpicyInvader
             this.MissileX = missileX;
             this.MissileY = missileY;
             this.MissilePause = missilePause;
+            shootPlayer = null;
             SetTimerEnemy();
         }
 
@@ -100,7 +102,6 @@ namespace SpicyInvader
         public void SetTimerPlayer()
         {
             shootPlayer.Elapsed += new ElapsedEventHandler(MissilePlayerMove);
-            shootPlayer.Start();
         }
 
         /// <summary>
@@ -109,7 +110,6 @@ namespace SpicyInvader
         public void SetTimerEnemy()
         {
             shootEnemy.Elapsed += new ElapsedEventHandler(MissileEnemyMove);
-            shootEnemy.Start();
         }
 
         /// <summary>
@@ -144,21 +144,21 @@ namespace SpicyInvader
                         PosXBunker[i] = Console.WindowTop;
                         MissileY = Console.WindowTop;
                         PosXBunker.Remove(PosXBunker[i]);
+                        shootPlayer.Stop();
                     }
                 }
-                // Check if the missile touch a pixel of a enemy
+                
                 for (int i = 0; i != Enemies.Length; i++)
                 {
                     if (Enemies[i] != null && MissileY == Enemies[i].EnemyY)
                     {
+                        // Check if the missile touch a pixel of a enemy
                         if (MissileX >= Enemies[i].EnemyX && MissileX <= Enemies[i].EnemyX + Enemies[i]._shipForm.Length - 1)
                         {
-                            //Enemies[i].ShipEnemyLive = false;
-                            //Enemies[i].Shoot = false;
-                            Console.MoveBufferArea(MissileX, MissileY + 1, 1, 1, MissileX, MissileY);
+                            Console.MoveBufferArea(0, 0, 1, 1, this.MissileX, this.MissileY);
                             Console.MoveBufferArea(0, 0, 5, 1, Enemies[i].EnemyX, Enemies[i].EnemyY);
-                            Enemies[i].StopShoot();
-
+                            Enemies[i].MissileEnemy.shootEnemy.Stop();
+                            Enemies[i].Dead();
                             Enemies[i] = null;
                             MissileY = Console.WindowTop;
                             Player.Score += 100;
@@ -167,6 +167,8 @@ namespace SpicyInvader
                         }
                     }
                 }
+
+
                 // Move the missile as long as the missile don't touch the top
                 if (MissileY != Console.WindowTop)
                 {
@@ -217,6 +219,7 @@ namespace SpicyInvader
                         PosXBunker[i] = Console.WindowTop;
                         MissileY = Console.WindowHeight - 1;
                         PosXBunker.Remove(PosXBunker[i]);
+                        shootEnemy.Stop();
                     }
                 }
                 // Check if the missile touch a pixel of the player
@@ -228,10 +231,23 @@ namespace SpicyInvader
                         MissileY = Console.WindowHeight;
                         Console.MoveBufferArea(1, 1, 2, 1, Console.WindowLeft + 11 - (6 / Player.ShipLife), Console.WindowHeight - 3);
                         Player.ShipLife -= 1;
+                        shootEnemy.Stop();
                     }
                 }
+
+                // Check if the missile touch a another player's missile
+                if (MissileX == Player.MissilePlayer.MissileX && MissileY >= Player.MissilePlayer.MissileY)
+                {
+                    Console.MoveBufferArea(0, 0, 1, 1, MissileX, MissileY);
+                    MissileLive = false;
+                    shootEnemy.Stop();
+                    Console.MoveBufferArea(1, 1, 1, 1, Player.MissilePlayer.MissileX, Player.MissilePlayer.MissileY);
+                    Player.MissilePlayer.MissileLive = false;
+                    Player.MissilePlayer.shootPlayer.Stop();
+                }
+
                 // Move the missile as long as the missile don't touch the bottom
-                if (MissileY < Console.WindowHeight - 7)
+                if (MissileY < Console.WindowHeight - 8)
                 {
                     MissileY++;
                     Console.MoveBufferArea(MissileX, MissileY - 1, 1, 1, MissileX, MissileY);
@@ -251,21 +267,27 @@ namespace SpicyInvader
         /// </summary>
         public void StopShoot()
         {
-            if(shootEnemy.Enabled == true)
+            if(shootPlayer == null)
             {
-                shootEnemy.Stop();
+                if (shootEnemy.Enabled == true)
+                {
+                    shootEnemy.Stop();
+                }
+                else
+                {
+                    shootEnemy.Start();
+                }
             }
             else
             {
-                shootEnemy.Start();
-            }
-            if (shootPlayer.Enabled == true)
-            {
-                shootPlayer.Stop();
-            }
-            else
-            {
-                shootPlayer.Start();
+                if (shootPlayer.Enabled == true)
+                {
+                    shootPlayer.Stop();
+                }
+                else
+                {
+                    shootPlayer.Start();
+                }
             }
         }
         #endregion
