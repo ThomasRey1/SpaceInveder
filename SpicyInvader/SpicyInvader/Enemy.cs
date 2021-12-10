@@ -90,14 +90,17 @@ namespace SpicyInvader
         {
             Random shoot = new Random();                // Generate a random number
             
-            // If the random number is equal to 0, launch a missile
-            if (shoot.Next(0, 6) == 0 && Shoot == true)
+            if(EnemyX > 17 && EnemyY < Console.WindowWidth - 17)
             {
-                Sound.SoundShipShoot(SoundGame); // Play the shoot sound
-                missileEnemy.MissileLive = true;
-                missileEnemy.MissileY = this.EnemyY + 1;
-                missileEnemy.MissileX = this.EnemyX + (3);
-                missileEnemy.MissileEnemyCreate();
+                // If the random number is equal to 0, launch a missile
+                if (shoot.Next(0, 5) == 0 && Shoot == true)
+                {
+                    Sound.SoundShipShoot(SoundGame); // Play the shoot sound
+                    missileEnemy.MissileLive = true;
+                    missileEnemy.MissileY = this.EnemyY + 1;
+                    missileEnemy.MissileX = this.EnemyX + _shipForm.Length / 2;
+                    missileEnemy.MissileEnemyCreate();
+                }
             }
         }
         public void StopShoot()
@@ -111,6 +114,14 @@ namespace SpicyInvader
                 enemyShooting.Start();
             }
             missileEnemy.StopShoot();
+        }
+
+        public void Dead()
+        {
+            enemyShooting.Stop();
+            missileEnemy.StopShoot();
+            Console.MoveBufferArea(1, 1, 1, 1, missileEnemy.MissileX, missileEnemy.MissileY);
+            missileEnemy = null;
         }
         #endregion
     }

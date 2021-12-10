@@ -50,17 +50,33 @@ namespace SpicyInvader
                         // If the lateral position is touching the left border of the window
                         if (_enemies[i].EnemyX == Console.WindowLeft)
                         {
-                            Console.MoveBufferArea(_enemies[i].EnemyX, _enemies[i].EnemyY, 5, 1, _enemies[i].EnemyX, _enemies[i].EnemyY + 1);     // descend the ship from one floor
+                            Console.MoveBufferArea(_enemies[i].EnemyX, _enemies[i].EnemyY, 5, 1, _enemies[i].EnemyX, _enemies[i].EnemyY + 1);       // descend the ship from one floor
                             _enemies[i].EnemyY++;
-                            _enemies[i].EnemyDirection = !_enemies[i].EnemyDirection;                                                     // Change the direction of the ship
+                            _enemies[i].EnemyDirection = !_enemies[i].EnemyDirection;                                                               // Change the direction of the ship
+
+                            //foreach (Enemy enemy in _enemies)
+                            //{
+                            //    Console.MoveBufferArea(enemy.EnemyX, enemy.EnemyY, 5, 1, enemy.EnemyX + 1, enemy.EnemyY + 1);           // descend the ship from one floor
+                            //    enemy.EnemyY++;
+                            //    enemy.EnemyX++;
+                            //    enemy.EnemyDirection = !enemy.EnemyDirection;                                                           // Change the direction of the ship
+                            //}
                         }
 
                         // If the lateral position is touching the right border of the window
                         else if (_enemies[i].EnemyX + 5 == Console.WindowWidth)
                         {
-                            Console.MoveBufferArea(_enemies[i].EnemyX, _enemies[i].EnemyY, 5, 1, _enemies[i].EnemyX, _enemies[i].EnemyY + 1);     // descend the ship from one floor
+                            Console.MoveBufferArea(_enemies[i].EnemyX, _enemies[i].EnemyY, 5, 1, _enemies[i].EnemyX, _enemies[i].EnemyY + 1);       // descend the ship from one floor
                             _enemies[i].EnemyY++;
-                            _enemies[i].EnemyDirection = !_enemies[i].EnemyDirection;                                                     // Change the direction of the ship
+                            _enemies[i].EnemyDirection = !_enemies[i].EnemyDirection;                                                               // Change the direction of the ship
+
+                            //foreach (Enemy enemy in _enemies)
+                            //{
+                            //    Console.MoveBufferArea(enemy.EnemyX, enemy.EnemyY, 5, 1, enemy.EnemyX - 1, enemy.EnemyY + 1);           // descend the ship from one floor
+                            //    enemy.EnemyY++;
+                            //    enemy.EnemyX--;
+                            //    enemy.EnemyDirection = !enemy.EnemyDirection;                                                           // Change the direction of the ship
+                            //}
                         }
 
                         // Else, move the ship to the left
@@ -86,26 +102,19 @@ namespace SpicyInvader
                 {
                     if (i != 19 && i != 0 &&  (_enemies[i + 1] != null || _enemies[i - 1] != null))
                     {
-                        //if (_enemies[i].EnemyX == _enemies[i + 1].EnemyX || _enemies[i].EnemyX == _enemies[i - 1].EnemyX)
-                        //{
-                        //    _enemies[i].Shoot = false;
-                        //}
-                        //else
-                        //{
-                        foreach(Enemy enemy in _enemies)
+                        if (i >= 15)
                         {
-
+                            _enemies[i].Shoot = true;
                         }
-                            if (i >= 15)
-                            {
-                                _enemies[i].Shoot = true;
-                            }
-                            // If the ship forward is destroy, so the ship beward can shoot
-                            else if (_enemies[i + 5] == null)
-                            {
-                                _enemies[i].Shoot = true;
-                            }
-                        //}
+                        // If the ship forward is destroy, so the ship beward can shoot
+                        else if (_enemies[i + 5] == null)
+                        {
+                            _enemies[i].Shoot = true;
+                        }
+                        else
+                        {
+                            _enemies[i].Shoot = false;
+                        }
                     }
                 }
             }

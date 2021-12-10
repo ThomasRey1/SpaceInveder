@@ -18,12 +18,12 @@ namespace SpicyInvader
     {
         #region Properties
         //Properties
-        private byte _shipLife = 3;             // The limit life of the player
         public string _shipForm = "├─┴─┤";      // The shap of the player's ship
         private bool _gamePause = false;        // Check if the game is in pause
         private const byte _shipSpeed = 1;      // The ship movement speed
-        private Enemy[] _enemies;             // List of enemies
+        private Enemy[] _enemies;               // List of enemies
         private bool _over = false;             // Check if the game is over or not
+        Missile missilePlayer;                  // Create a missile
         #endregion
 
         #region Getter - Setter
@@ -31,32 +31,32 @@ namespace SpicyInvader
         /// <summary>
         /// ShipX property definition
         /// </summary>
-        public int ShipX { get; set; }                     // The lateral position of the ship
+        public int ShipX { get; set; }                      // The lateral position of the ship
 
         /// <summary>
         /// ShipY property definition
         /// </summary>
-        public int ShipY { get; set; }                    // The vertical position of the ship
+        public int ShipY { get; set; }                      // The vertical position of the ship
 
         /// <summary>
         /// SoundGame property definition
         /// </summary>
-        public bool SoundGame { get; set; }                // The sound is ON or OFF
+        public bool SoundGame { get; set; }                 // The sound is ON or OFF
 
         /// <summary>
         /// PosXBunker property definition
         /// </summary>
-        public List<int> PosXBunker { get; set; }                           // Postition of the bunker
+        public List<int> PosXBunker { get; set; }           // Postition of the bunker
 
         /// <summary>
         /// ShipLife property definition
         /// </summary>
-        public byte ShipLife
-        {
-            get { return _shipLife; }
+        public byte ShipLife { get; set; }                  // The limit life of the player
 
-            set { _shipLife = value; }
-        }
+        /// <summary>
+        /// Score property definition
+        /// </summary>
+        public int Score { get; set; }                      // Score of the game
         #endregion
 
         #region Method
@@ -73,6 +73,9 @@ namespace SpicyInvader
             this.SoundGame = soundGame;
             this.PosXBunker = posXBunker;
             this._enemies = enemies;
+            this.ShipLife = 3;
+            this.Score = 0;
+            this.missilePlayer = new Missile(1, 1, _gamePause, false, PosXBunker, _enemies);
             Console.SetCursorPosition(ShipX, ShipY);
             Console.Write(_shipForm);
         }
@@ -85,7 +88,8 @@ namespace SpicyInvader
         /// </summary>
         public void ShipAction(Move move)
         {
-            Missile missilePlayer = new Missile(1, 1, _gamePause, false, PosXBunker, _enemies) ; // Create a missile
+            _over = false;
+            missilePlayer.Player = this;
             short GetAsyncKeyStateResult = GetAsyncKeyState(32); // Result of the keyboard key pressed
             do
             {
@@ -167,7 +171,7 @@ namespace SpicyInvader
                         }
                     }
                 }
-                if(_shipLife == 0)
+                if(ShipLife == 0)
                 {
                     _over = true;
                 }

@@ -29,6 +29,7 @@ namespace SpicyInvader
             bool redo = true;               // Redo a while loop until the player choose an option
             bool soundGame = true;          // The sound is ON or OFF
             bool difficulty = false;        // The difficulty level
+            int Highscore = 0;              // The highscore of the game
             #endregion
 
             Sound.SoundMenu(soundGame);

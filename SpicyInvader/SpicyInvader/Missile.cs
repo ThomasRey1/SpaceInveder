@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  Auteur : Thomas Rey
  *  Date : 10.09.2021
  *  Lieu : ETML
@@ -63,7 +63,7 @@ namespace SpicyInvader
 
         #region Method
         /// <summary>
-        /// Constructor
+        /// Constructor player
         /// </summary>
         /// <param name="missileX">The lateral position of the missile</param>
         /// <param name="missileY">The vertical position of the missile</param>
@@ -81,7 +81,7 @@ namespace SpicyInvader
         }
 
         /// <summary>
-        /// Constructor
+        /// Constructor enemy
         /// </summary>
         /// <param name="missileX">The lateral position of the missile</param>
         /// <param name="missileY">The vertical position of the missile</param>
@@ -143,6 +143,7 @@ namespace SpicyInvader
                         Console.MoveBufferArea(MissileX, MissileY + 1, 1, 1, MissileX, MissileY);
                         PosXBunker[i] = Console.WindowTop;
                         MissileY = Console.WindowTop;
+                        PosXBunker.Remove(PosXBunker[i]);
                     }
                 }
                 // Check if the missile touch a pixel of a enemy
@@ -157,8 +158,12 @@ namespace SpicyInvader
                             Console.MoveBufferArea(MissileX, MissileY + 1, 1, 1, MissileX, MissileY);
                             Console.MoveBufferArea(0, 0, 5, 1, Enemies[i].EnemyX, Enemies[i].EnemyY);
                             Enemies[i].StopShoot();
+
                             Enemies[i] = null;
                             MissileY = Console.WindowTop;
+                            Player.Score += 100;
+                            Console.SetCursorPosition(Console.WindowWidth / 3 + 8, Console.WindowHeight - 3);
+                            Console.Write(Player.Score);
                         }
                     }
                 }
@@ -188,6 +193,8 @@ namespace SpicyInvader
             {
                 Console.SetCursorPosition(MissileX, MissileY); // Position the cursor in the location of the missile
                 Console.Write(_missileShap);                   // Create the missile
+                Console.MoveBufferArea(1, 1, 1, 1, MissileX - 1, MissileY);
+                Console.MoveBufferArea(1, 1, 1, 1, MissileX + 1, MissileY);
                 shootEnemy.Start();
             }
         }
@@ -209,6 +216,7 @@ namespace SpicyInvader
                         Console.MoveBufferArea(1, 1, 1, 1, MissileX, MissileY);
                         PosXBunker[i] = Console.WindowTop;
                         MissileY = Console.WindowHeight - 1;
+                        PosXBunker.Remove(PosXBunker[i]);
                     }
                 }
                 // Check if the missile touch a pixel of the player
@@ -218,6 +226,7 @@ namespace SpicyInvader
                     {
                         Console.MoveBufferArea(1, 1, 1, 1, MissileX, MissileY);
                         MissileY = Console.WindowHeight;
+                        Console.MoveBufferArea(1, 1, 2, 1, Console.WindowLeft + 11 - (6 / Player.ShipLife), Console.WindowHeight - 3);
                         Player.ShipLife -= 1;
                     }
                 }

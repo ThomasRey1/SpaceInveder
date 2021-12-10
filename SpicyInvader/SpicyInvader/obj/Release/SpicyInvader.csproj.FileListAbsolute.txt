@@ -1,0 +1,7 @@
+C:\Users\thorey\Desktop\SpicyInvader\SpicyInvader\bin\Release\SpicyInvader.exe.config
+C:\Users\thorey\Desktop\SpicyInvader\SpicyInvader\bin\Release\SpicyInvader.exe
+C:\Users\thorey\Desktop\SpicyInvader\SpicyInvader\bin\Release\SpicyInvader.pdb
+C:\Users\thorey\Desktop\SpicyInvader\SpicyInvader\obj\Release\SpicyInvader.csproj.AssemblyReference.cache
+C:\Users\thorey\Desktop\SpicyInvader\SpicyInvader\obj\Release\SpicyInvader.csproj.CoreCompileInputs.cache
+C:\Users\thorey\Desktop\SpicyInvader\SpicyInvader\obj\Release\SpicyInvader.exe
+C:\Users\thorey\Desktop\SpicyInvader\SpicyInvader\obj\Release\SpicyInvader.pdb
