@@ -6,6 +6,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 
 namespace SpicyInvader
 {
@@ -14,6 +15,17 @@ namespace SpicyInvader
     /// </summary>
     class Program
     {
+        #region Properties
+        // Properties
+        static byte choice = 1;                                 // The choice option of the player
+        static bool redo = true;                                // Redo a while loop until the player choose an option
+        static bool soundGame = true;                           // The sound is ON or OFF
+        static bool difficulty = false;                         // The difficulty level
+        static List<int> score = new List<int>();               // The highscore of the game
+        static List<string> scoreName = new List<string>();     // The name of the player than make the highscore
+        static string middle = "";                              // Margin the contents
+        #endregion
+
         #region Method
         /// <summary>
         /// Execute the different choice of the player
@@ -23,47 +35,57 @@ namespace SpicyInvader
         {
             //test test = new test();
             //Console.Read();
-            #region Properties
-            // Properties
-            byte choice = 1;                // The choice option of the player
-            bool redo = true;               // Redo a while loop until the player choose an option
-            bool soundGame = true;          // The sound is ON or OFF
-            bool difficulty = false;        // The difficulty level
-            int Highscore = 0;              // The highscore of the game
-            #endregion
 
+            Console.CursorVisible = false;
             Sound.SoundMenu(soundGame);
+            Console.WindowWidth = 41;
+            Console.WindowHeight = 20;
+
+            for (int i = 0; i != Console.WindowWidth / 3; i++)
+            {
+                middle += " ";
+            }
 
             // Execute the choice of the user
             do
             {
-                Console.CursorVisible = false;
-                Show(ref choice);
-                Console.Clear();
+                Show();
                 if (choice == 1)
                 {
+                    Console.WindowWidth = 120;
                     Console.WindowHeight = 36;
                     GameSetting NewGame = new GameSetting(difficulty, soundGame);
                     NewGame.GameStarted();
+                    Console.Clear();
+
+                    // Enter the name of the player and him score
+                    Console.WindowWidth = 41;
+                    Console.WindowHeight = 20;
+                    score.Add(NewGame.GetScore());
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.Write("Entrez votre speudo : ");
+                    scoreName.Add(Console.ReadLine());
+
                     NewGame = null;
+
+                    Console.Clear();
                 }
                 else if (choice == 2)
                 {
-                    Configure(ref soundGame, ref difficulty);
+                    Configure();
                 }
                 else if (choice == 3)
                 {
-
+                    ShowHighscore();
                 }
                 else if (choice == 4)
                 {
-
+                    Pertinent();
                 }
                 else if (choice == 5)
                 {
                     Environment.Exit(0);
                 }
-                Console.Clear();
             }
             while (redo);
         }
@@ -71,228 +93,262 @@ namespace SpicyInvader
         /// <summary>
         /// Show the main menu
         /// </summary>
-        /// <param name="S_option">The choice option of the player</param>
         /// <returns></returns>
-        static byte Show(ref byte S_option)
+        static byte Show()
         {
             #region Properties
             bool main = true;           // While loop for choose the option
             ConsoleKeyInfo keyInfo;     // Check the key than the player touch
-            string middle = "";         // Margin the contents
+            byte cursorY = 4;           // The position vertical of the cursor
+            char cursor = '>';          // The forme of the cursor
             #endregion
 
-            for (int i = 0; i != Console.WindowWidth / 2 - 13; i++)
-            {
-                middle += " ";
-            }
+            choice = 1;
+            Console.ForegroundColor = ConsoleColor.White;
 
-            // Show the main menu with their option
+            // Show the main menu with its option
+            Console.WriteLine("=========================================");
+            Console.WriteLine("=             Space Invader             =");
+            Console.WriteLine("=========================================\n");
+
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write("{0}{1}", middle, cursor);
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine(" Jouer\n"); 
+            Console.WriteLine("{0} Options\n", middle);
+            Console.WriteLine("{0} Highscore\n", middle);
+            Console.WriteLine("{0} A propos\n", middle);
+            Console.WriteLine("{0} Quitter", middle);
+
+            // Check the user's movement
             do
             {
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine(middle + "=========================");
-                Console.WriteLine(middle + "=     Space Invader     =");
-                Console.WriteLine(middle + "=========================\n");
-
-
-                if (S_option == 1)
-                {
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine(middle + "> Jouer <\n");
-                    Console.ForegroundColor = ConsoleColor.White;
-                }
-                else
-                {
-                    Console.WriteLine(middle + "  Jouer\n");
-                }
-                if (S_option == 2)
-                {
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine(middle + "> Options <\n");
-                    Console.ForegroundColor = ConsoleColor.White;
-                }
-                else
-                {
-                    Console.WriteLine(middle + "  Options\n");
-                }
-                if (S_option == 3)
-                {
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine(middle + "> Highscore <\n");
-                    Console.ForegroundColor = ConsoleColor.White;
-                }
-                else
-                {
-                    Console.WriteLine(middle + "  Highscore\n");
-                }
-                if (S_option == 4)
-                {
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine(middle + "> A propos <\n");
-                    Console.ForegroundColor = ConsoleColor.White;
-                }
-                else
-                {
-                    Console.WriteLine(middle + "  A propos\n");
-                }
-                if (S_option == 5)
-                {
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine(middle + "> Quitter <");
-                    Console.ForegroundColor = ConsoleColor.White;
-                }
-                else
-                {
-                    Console.WriteLine(middle + "  Quitter");
-                }
-
-                // Check the user's movement
-                keyInfo = Console.ReadKey();
+                keyInfo = Console.ReadKey(true);
+                // Move down the option
                 if (keyInfo.Key == ConsoleKey.DownArrow)
                 {
-                    S_option++;
+                    choice++;
+                    if (choice > 5)
+                    {
+                        Console.MoveBufferArea(middle.Length, cursorY, 1, 1, middle.Length, 4);
+                        Console.MoveBufferArea(middle.Length + 2, cursorY, 9, 1, middle.Length + 1, cursorY);
+                        Console.MoveBufferArea(middle.Length + 1, 4, 9, 1, middle.Length + 2, 4);
+                        choice = 1;
+                        cursorY = 4;
+                    }
+                    else
+                    {
+                        Console.MoveBufferArea(middle.Length, cursorY, 1, 1, middle.Length, cursorY + 2);
+                        Console.MoveBufferArea(middle.Length + 2, cursorY, 9, 1, middle.Length + 1, cursorY);
+                        Console.MoveBufferArea(middle.Length + 1, cursorY + 2, 9, 1, middle.Length + 2, cursorY + 2);
+                        cursorY += 2;
+                    }
                 }
+                // Move up the option
                 else if (keyInfo.Key == ConsoleKey.UpArrow)
                 {
-                    S_option--;
+                    choice--;
+                    if (choice < 1)
+                    {
+                        Console.MoveBufferArea(middle.Length, cursorY, 1, 1, middle.Length, 12);
+                        Console.MoveBufferArea(middle.Length + 2, cursorY, 9, 1, middle.Length + 1, cursorY);
+                        Console.MoveBufferArea(middle.Length + 1, 12, 9, 1, middle.Length + 2, 12);
+                        choice = 5;
+                        cursorY = 12;
+                    }
+                    else
+                    {
+                        Console.MoveBufferArea(middle.Length, cursorY, 1, 1, middle.Length, cursorY - 2);
+                        Console.MoveBufferArea(middle.Length + 2, cursorY, 9, 1, middle.Length + 1, cursorY);
+                        Console.MoveBufferArea(middle.Length + 1, cursorY - 2, 9, 1, middle.Length + 2, cursorY - 2);
+                        cursorY -= 2;
+                    }
                 }
                 else if (keyInfo.Key == ConsoleKey.Spacebar || keyInfo.Key == ConsoleKey.Enter)
                 {
                     main = false;
                 }
-
-                if (S_option > 5)
-                    S_option = 1;
-                else if (S_option < 1)
-                    S_option = 5;
-                Console.Clear();
             }
             while (main);
-            return S_option; // Return the number of the choice
+            Console.Clear();
+            return choice; // Return the number of the choice
         }
 
         /// <summary>
-        /// Set up the configuration
+        /// Show the configuration
         /// </summary>
-        /// <param name="C_soundGame">activated or deactivated the sound</param>
-        /// <param name="C_difficulty">Change the difficult mode</param>
-        static void Configure(ref bool C_soundGame, ref bool C_difficulty)
+        static void Configure()
         {
             #region Properties
             bool main = true;           // While loop for choose the option
             ConsoleKeyInfo keyInfo;     // Check the key than the player touch
-            string middle = "";         // Margin the contents
             byte option = 1;            // The choice option of the player
+            byte cursorY = 4;           // The position vertical of the cursor
+            char cursor = '>';          // The forme of the cursor
             #endregion
 
-            for (int i = 0; i != 44; i++)
+            // Write the menu option
+            Console.WriteLine("=========================================");
+            Console.WriteLine("=                 Option                =");
+            Console.WriteLine("=========================================\n");
+
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write("{0}{1}", middle, cursor);
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write(" Son : ");
+            if (soundGame)
             {
-                middle += " ";
+                Console.WriteLine("ON \n");
             }
+            else
+            {
+                Console.WriteLine("OFF\n");
+            }
+            Console.Write("{0} Difficulté : ", middle);
+            if (difficulty)
+            {
+                Console.WriteLine("DIFFICILE\n");
+            }
+            else
+            {
+                Console.WriteLine("FACILE   \n");
+            }
+            Console.WriteLine("{0} Retour\n", middle);
+
+            // Check the user's mouvement
             do
             {
-                Console.ForegroundColor = ConsoleColor.White;
-                Console.WriteLine(middle + "=========================");
-                Console.WriteLine(middle + "=     Space Invader     =");
-                Console.WriteLine(middle + "=========================\n");
-
-
-                if (option == 1)
-                {
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.Write(middle + "> Son : ");
-                    if (C_soundGame == true)
-                    {
-                        Console.WriteLine("ON\n");
-                    }
-                    else
-                    {
-                        Console.WriteLine("OFF\n");
-                    }
-                    Console.ForegroundColor = ConsoleColor.White;
-                }
-                else
-                {
-                    Console.Write(middle + "  Son : ");
-                    if (C_soundGame == true)
-                    {
-                        Console.WriteLine("ON\n");
-                    }
-                    else
-                    {
-                        Console.WriteLine("OFF\n");
-                    }
-                }
-                if (option == 2)
-                {
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.Write(middle + "> Difficulté :  ");
-                    if (C_difficulty == false)
-                    {
-                        Console.WriteLine("FACILE\n");
-                    }
-                    else
-                    {
-                        Console.WriteLine("DIFFICILE\n");
-                    }
-                    Console.ForegroundColor = ConsoleColor.White;
-                }
-                else
-                {
-                    Console.Write(middle + "  Difficulté : ");
-                    if (C_difficulty == false)
-                    {
-                        Console.WriteLine("FACILE\n");
-                    }
-                    else
-                    {
-                        Console.WriteLine("DIFFICILE\n");
-                    }
-                }
-                if (option == 3)
-                {
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine(middle + "> Retour \n");
-                    Console.ForegroundColor = ConsoleColor.White;
-                }
-                else
-                {
-                    Console.WriteLine(middle + "  Retour\n");
-                }
-
-                keyInfo = Console.ReadKey();
+                keyInfo = Console.ReadKey(true);
+                // Move up the option
                 if (keyInfo.Key == ConsoleKey.DownArrow)
                 {
                     option++;
+                    if (option > 3)
+                    {
+                        Console.MoveBufferArea(middle.Length, cursorY, 1, 1, middle.Length, 4);
+                        Console.MoveBufferArea(middle.Length + 2, cursorY, 23, 1, middle.Length + 1, cursorY);
+                        Console.MoveBufferArea(middle.Length + 1, 4, 23, 1, middle.Length + 2, 4);
+                        option = 1;
+                        cursorY = 4;
+                    }
+                    else
+                    {
+                        Console.MoveBufferArea(middle.Length, cursorY, 1, 1, middle.Length, cursorY + 2);
+                        Console.MoveBufferArea(middle.Length + 2, cursorY, 23, 1, middle.Length + 1, cursorY);
+                        Console.MoveBufferArea(middle.Length + 1, cursorY + 2, 23, 1, middle.Length + 2, cursorY + 2);
+                        cursorY += 2;
+                    }
                 }
+                // Move down the option
                 else if (keyInfo.Key == ConsoleKey.UpArrow)
                 {
                     option--;
+                    if (option < 1)
+                    {
+                        Console.MoveBufferArea(middle.Length, cursorY, 1, 1, middle.Length, 8);
+                        Console.MoveBufferArea(middle.Length + 2, cursorY, 23, 1, middle.Length + 1, cursorY);
+                        Console.MoveBufferArea(middle.Length + 1, 8, 23, 1, middle.Length + 2, 8);
+                        option = 3;
+                        cursorY = 8;
+                    }
+                    else
+                    {
+                        Console.MoveBufferArea(middle.Length, cursorY, 1, 1, middle.Length, cursorY - 2);
+                        Console.MoveBufferArea(middle.Length + 2, cursorY, 23, 1, middle.Length + 1, cursorY);
+                        Console.MoveBufferArea(middle.Length + 1, cursorY - 2, 23, 1, middle.Length + 2, cursorY - 2);
+                        cursorY -= 2;
+                    }
                 }
+                // If the player presses the spacebar or the enter, then activate or deactivate the option in question
                 else if (keyInfo.Key == ConsoleKey.Spacebar || keyInfo.Key == ConsoleKey.Enter)
                 {
                     if (option == 1)
                     {
-                        C_soundGame = !C_soundGame;
-                        Sound.SoundMenu(C_soundGame);
+                        soundGame = !soundGame;
+                        Sound.SoundMenu(soundGame);
+                        Console.SetCursorPosition(middle.Length + 8, cursorY);
+                        if (soundGame)
+                        {
+                            Console.Write("ON ");
+                        }
+                        else
+                        {
+                            Console.Write("OFF");
+                        }
                     }
                     else if (option == 2)
                     {
-                        C_difficulty = !C_difficulty;
+                        difficulty = !difficulty;
+                        Console.SetCursorPosition(middle.Length + 15, cursorY);
+                        if (difficulty)
+                        {
+                            Console.Write("DIFFICILE");
+                        }
+                        else
+                        {
+                            Console.Write("FACILE   ");
+                        }
                     }
                     else
                     {
                         main = false;
                     }
                 }
-
-                if (option > 3)
-                    option = 1;
-                else if (option < 1)
-                    option = 3;
-                Console.Clear();
             }
             while (main);
+            Console.Clear();
+        }
+
+        /// <summary>
+        /// Show to the player the score board
+        /// </summary>
+        static void ShowHighscore()
+        {
+            Console.WriteLine("=========================================");
+            Console.WriteLine("=               Highscore               =");
+            Console.WriteLine("=========================================\n");
+
+            // Write the list of player and their score
+            Console.ForegroundColor = ConsoleColor.Green;
+            if (scoreName.Count != 0)
+            {
+                for (int i = 0; i < scoreName.Count; i++)
+                {
+                    Console.WriteLine("{0} {1} : {2}\n", middle, scoreName[i], score[i]);
+                }
+            }
+            else
+            {
+                Console.WriteLine("{0} -",middle);
+            }
+            Console.ReadKey(true);
+            Console.Clear();
+        }
+
+        /// <summary>
+        /// Show the commande to the player
+        /// </summary>
+        static void Pertinent()
+        {
+            Console.WriteLine("=========================================");
+            Console.WriteLine("=                À propos               =");
+            Console.WriteLine("=========================================\n");
+
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write("{0} Fléche directionnel ", middle);
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine(":\n{0}      Se déplacer\n", middle);
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write("{0} Espace ", middle);
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine(":\n{0}      Tirer\n", middle);
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write("{0} P/esc ", middle);
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine(":\n{0}      Pause\n", middle);
+
+            Console.ReadKey(true);
+            Console.Clear();
         }
         #endregion
     }

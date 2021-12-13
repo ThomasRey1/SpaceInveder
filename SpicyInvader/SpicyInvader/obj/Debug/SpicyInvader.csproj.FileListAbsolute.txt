@@ -19,3 +19,11 @@ F:\année 2\Semestre1\P.Chenaux\P_Dev\SpicyInvader\SpicyInvader\obj\Debug\SpicyI
 F:\année 2\Semestre1\P.Chenaux\P_Dev\SpicyInvader\SpicyInvader\obj\Debug\SpicyInvader.exe
 F:\année 2\Semestre1\P.Chenaux\P_Dev\SpicyInvader\SpicyInvader\obj\Debug\SpicyInvader.pdb
 C:\Users\thorey\Desktop\SpicyInvader\SpicyInvader\obj\Debug\SpicyInvader.csproj.AssemblyReference.cache
+C:\Users\thomr\OneDrive\Bureau\SpicyInvader\SpicyInvader\bin\Debug\SpicyInvader.exe.config
+C:\Users\thomr\OneDrive\Bureau\SpicyInvader\SpicyInvader\bin\Debug\SpicyInvader.exe
+C:\Users\thomr\OneDrive\Bureau\SpicyInvader\SpicyInvader\bin\Debug\SpicyInvader.pdb
+C:\Users\thomr\OneDrive\Bureau\SpicyInvader\SpicyInvader\obj\Debug\SpicyInvader.csproj.AssemblyReference.cache
+C:\Users\thomr\OneDrive\Bureau\SpicyInvader\SpicyInvader\obj\Debug\SpicyInvader.csproj.SuggestedBindingRedirects.cache
+C:\Users\thomr\OneDrive\Bureau\SpicyInvader\SpicyInvader\obj\Debug\SpicyInvader.csproj.CoreCompileInputs.cache
+C:\Users\thomr\OneDrive\Bureau\SpicyInvader\SpicyInvader\obj\Debug\SpicyInvader.exe
+C:\Users\thomr\OneDrive\Bureau\SpicyInvader\SpicyInvader\obj\Debug\SpicyInvader.pdb

@@ -22,7 +22,7 @@ namespace SpicyInvader
         public static void SoundMenu(bool sound)
         {
             SoundPlayer musicMenu = new SoundPlayer("MusicMenu.wav");
-            if (sound == true)
+            if (sound == false)
             {
                 musicMenu.PlayLooping();
             }
@@ -39,7 +39,7 @@ namespace SpicyInvader
         public static void SoundShipShoot(bool sound)
         {
             SoundPlayer soundShoot = new SoundPlayer("LaserShoot.wav");
-            if (sound == true)
+            if (sound == false)
             {
                 soundShoot.Play();
             }

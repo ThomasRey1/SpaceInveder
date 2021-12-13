@@ -90,30 +90,35 @@ namespace SpicyInvader
                 if (player.ShipLife == 0)
                 {
                     Console.Clear();
+                    move.StopMove();
+                    move = null;
                     for (byte i = 0; i < _enemies.Length; i++)
                     {
                         if (_enemies[i] != null)
                         {
+                            _enemies[i].Dead();
                             _enemies[i].StopShoot();
                         }
                         _enemies[i] = null;
                     }
+                    score = player.Score;
                     player = null;
-                    move.StopMove();
-                    move = null;
                     redo = false;
                 }
                 else
                 {
+                    Thread.Sleep(50);
+                    move.StopMove();
+                    move = null;
                     for (byte i = 0; i < _enemies.Length; i++)
                     {
                         if (_enemies[i] != null)
                         {
                             _enemies[i].StopShoot();
+                            _enemies[i].Dead();
                         }
                         _enemies[i] = null;
                     }
-                    move = null;
 
                     Console.MoveBufferArea(player.ShipX, player.ShipY, player.ShipForm.Length, 1, Console.WindowWidth / 2 - 3, Console.WindowHeight - 7);
                     player.ShipX = Console.WindowWidth / 2 - 3;
@@ -130,7 +135,9 @@ namespace SpicyInvader
             }
         }
 
-
+        /// <summary>
+        /// Create the enemies and add them in the table
+        /// </summary>
         public void CreatEnemy()
         {
             int x = 0;
@@ -165,6 +172,15 @@ namespace SpicyInvader
                 x++;
                 Thread.Sleep(100);
             }
+        }
+
+        /// <summary>
+        /// Get the score of the game
+        /// </summary>
+        /// <returns></returns>
+        public int GetScore()
+        {
+            return score;
         }
         #endregion
     }

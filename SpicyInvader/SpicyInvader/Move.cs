@@ -19,7 +19,7 @@ namespace SpicyInvader
         #region Properties
         // Properties
         private Enemy[] _enemies;                         // List of enemies
-        private Timer enemyMovement = new Timer(200);      // Loop to move the enemies ship
+        private Timer enemyMovement = new Timer(250);      // Loop to move the enemies ship
         #endregion
 
         #region Method
