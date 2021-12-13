@@ -21,8 +21,8 @@ namespace SpicyInvader
         /// <param name="sound">check if the sound is activated or not</param>
         public static void SoundMenu(bool sound)
         {
-            SoundPlayer musicMenu = new SoundPlayer("MusicMenu.wav");
-            if (sound == false)
+            SoundPlayer musicMenu = new SoundPlayer("MusicMenu2.wav");
+            if (sound == true)
             {
                 musicMenu.PlayLooping();
             }
@@ -39,7 +39,7 @@ namespace SpicyInvader
         public static void SoundShipShoot(bool sound)
         {
             SoundPlayer soundShoot = new SoundPlayer("LaserShoot.wav");
-            if (sound == false)
+            if (sound == true)
             {
                 soundShoot.Play();
             }

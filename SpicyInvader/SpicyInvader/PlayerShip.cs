@@ -164,18 +164,18 @@ namespace SpicyInvader
                             MissilePlayer.MissilePlayerCreate();
                         }
                     }
-                    // If the key pressed is the P
-                    else if (key.Key == ConsoleKey.P)
+                    // If the key pressed is the P or escape
+                    else if (key.Key == ConsoleKey.P || key.Key == ConsoleKey.Escape)
                     {
                         // The game is in pause
                         _gamePause = !_gamePause;
-                        MissilePlayer.MissilePause = _gamePause;
-                        move.StopMove();
+                        MissilePlayer.StopShoot(_gamePause);
+                        move.StopMove(_gamePause);
                         foreach(Enemy x in _enemies)
                         {
                             if(x != null)
                             {
-                                x.StopShoot();
+                                x.StopShoot(_gamePause);
                             }
                         }
                     }
@@ -199,7 +199,7 @@ namespace SpicyInvader
                 i = 0;
             }
             while (_over == false);
-            MissilePlayer.StopShoot();
+            MissilePlayer.StopShoot(_gamePause);
         }
         #endregion
     }

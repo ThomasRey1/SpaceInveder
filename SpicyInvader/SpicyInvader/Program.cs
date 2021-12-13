@@ -21,8 +21,9 @@ namespace SpicyInvader
         static bool redo = true;                                // Redo a while loop until the player choose an option
         static bool soundGame = true;                           // The sound is ON or OFF
         static bool difficulty = false;                         // The difficulty level
-        static List<int> score = new List<int>();               // The highscore of the game
-        static List<string> scoreName = new List<string>();     // The name of the player than make the highscore
+        static int highscore = 0;                               // The highscore of the game
+        static List<int> score = new List<int>();               // List of score
+        static List<string> scoreName = new List<string>();     // List of name of players
         static string middle = "";                              // Margin the contents
         #endregion
 
@@ -62,6 +63,10 @@ namespace SpicyInvader
                     Console.WindowWidth = 41;
                     Console.WindowHeight = 20;
                     score.Add(NewGame.GetScore());
+                    if(NewGame.GetScore() > highscore)
+                    {
+                        highscore = NewGame.GetScore();
+                    }
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.Write("Entrez votre speudo : ");
                     scoreName.Add(Console.ReadLine());
@@ -104,12 +109,16 @@ namespace SpicyInvader
             #endregion
 
             choice = 1;
-            Console.ForegroundColor = ConsoleColor.White;
 
             // Show the main menu with its option
-            Console.WriteLine("=========================================");
-            Console.WriteLine("=             Space Invader             =");
-            Console.WriteLine("=========================================\n");
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("╔═══════════════════════════════════════╗");
+            Console.Write("║");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write("             Space Invader             ");
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("║");
+            Console.WriteLine("╚═══════════════════════════════════════╝\n");
 
             Console.ForegroundColor = ConsoleColor.Green;
             Console.Write("{0}{1}", middle, cursor);
@@ -187,10 +196,16 @@ namespace SpicyInvader
             char cursor = '>';          // The forme of the cursor
             #endregion
 
+            Console.ForegroundColor = ConsoleColor.Green;
             // Write the menu option
-            Console.WriteLine("=========================================");
-            Console.WriteLine("=                 Option                =");
-            Console.WriteLine("=========================================\n");
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("╔═══════════════════════════════════════╗");
+            Console.Write("║");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write("                 Option                ");
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("║");
+            Console.WriteLine("╚═══════════════════════════════════════╝\n");
 
             Console.ForegroundColor = ConsoleColor.Green;
             Console.Write("{0}{1}", middle, cursor);
@@ -304,17 +319,34 @@ namespace SpicyInvader
         /// </summary>
         static void ShowHighscore()
         {
-            Console.WriteLine("=========================================");
-            Console.WriteLine("=               Highscore               =");
-            Console.WriteLine("=========================================\n");
+            string middleHighscore = "";
+            for (int i = 0; i != Console.WindowWidth / 3 - 9; i++)
+            {
+                middleHighscore += " ";
+            }
+
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("╔═══════════════════════════════════════╗");
+            Console.Write("║");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write("               Highscore               ");
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("║");
+            Console.WriteLine("╚═══════════════════════════════════════╝\n");
 
             // Write the list of player and their score
-            Console.ForegroundColor = ConsoleColor.Green;
             if (scoreName.Count != 0)
             {
                 for (int i = 0; i < scoreName.Count; i++)
                 {
-                    Console.WriteLine("{0} {1} : {2}\n", middle, scoreName[i], score[i]);
+                    if(score[i] == highscore)
+                    {
+                        Console.WriteLine("Highscore{0} {1} : {2}\n", middleHighscore, scoreName[i], score[i]);
+                    }
+                    else
+                    {
+                        Console.WriteLine("{0} {1} : {2}\n", middle, scoreName[i], score[i]);
+                    }
                 }
             }
             else
@@ -330,9 +362,14 @@ namespace SpicyInvader
         /// </summary>
         static void Pertinent()
         {
-            Console.WriteLine("=========================================");
-            Console.WriteLine("=                À propos               =");
-            Console.WriteLine("=========================================\n");
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("╔═══════════════════════════════════════╗");
+            Console.Write("║");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.Write("                À propos               ");
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("║");
+            Console.WriteLine("╚═══════════════════════════════════════╝\n");
 
             Console.ForegroundColor = ConsoleColor.Green;
             Console.Write("{0} Fléche directionnel ", middle);

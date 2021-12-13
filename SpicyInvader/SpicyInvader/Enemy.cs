@@ -18,9 +18,10 @@ namespace SpicyInvader
     {
         #region Properties
         //Properties
+        public Random shoot = new Random();                                 // Generate a random number
         public string _shipForm = "■─▬─■";                                  // The shap of the enemy's ship
-        private bool _gamePause = false;                                    // Check if the game is in pause
-        private Timer _enemyShooting = new Timer(1000);                     // Loop to shoot a missile
+        private Timer _enemyShooting = new Timer(250);                      // Loop to shoot a missile
+
         #endregion
 
         #region Getter - Setter
@@ -93,24 +94,19 @@ namespace SpicyInvader
         }
         public void EnemyShoot(object source, ElapsedEventArgs e)
         {
-            Random shoot = new Random();                // Generate a random number
-            
-            if(EnemyX > 17 && EnemyY < Console.WindowWidth - 17)
+            // If the random number is equal to 0, launch a missile
+            if (shoot.Next(0, 11) == 0 && Shoot == true && MissileEnemy.MissileLive == false)
             {
-                // If the random number is equal to 0, launch a missile
-                if (shoot.Next(0, 5) == 0 && Shoot == true)
-                {
-                    Sound.SoundShipShoot(SoundGame); // Play the shoot sound
-                    MissileEnemy.MissileLive = true;
-                    MissileEnemy.MissileY = this.EnemyY + 1;
-                    MissileEnemy.MissileX = this.EnemyX + _shipForm.Length / 2;
-                    MissileEnemy.MissileEnemyCreate();
-                }
+                Sound.SoundShipShoot(SoundGame); // Play the shoot sound
+                MissileEnemy.MissileLive = true;
+                MissileEnemy.MissileY = this.EnemyY + 1;
+                MissileEnemy.MissileX = this.EnemyX + _shipForm.Length / 2;
+                MissileEnemy.MissileEnemyCreate();
             }
         }
-        public void StopShoot()
+        public void StopShoot(bool pause)
         {
-            if(_enemyShooting.Enabled == true)
+            if (pause == true)
             {
                 _enemyShooting.Stop();
             }
@@ -118,6 +114,7 @@ namespace SpicyInvader
             {
                 _enemyShooting.Start();
             }
+            MissileEnemy.StopShoot(pause);
         }
 
         public void Dead()
