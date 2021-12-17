@@ -19,7 +19,7 @@ namespace SpicyInvader
         #region Properties
         //Properties
         private bool _soundGame;                                            // The sound is ON or OFF
-        private Random shoot = new Random();                                 // Generate a random number
+        private Random _shoot = new Random();                                 // Generate a random number
         private Timer _enemyShooting = new Timer(250);                      // Loop to shoot a missile
         #endregion
 
@@ -88,12 +88,19 @@ namespace SpicyInvader
             _enemyShooting.Elapsed += new ElapsedEventHandler(EnemyShoot);
             _enemyShooting.Start();
         }
+
+        /// <summary>
+        /// Shoot a enemy missile
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="e"></param>
         public void EnemyShoot(object source, ElapsedEventArgs e)
         {
+            // Depending on the difficulty, the ship shoot more often
             if(Difficulty == false)
             {
                 // If the random number is equal to 0, launch a missile
-                if (shoot.Next(0, 11) == 0 && Shoot == true && MissileEnemy.MissileLive == false)
+                if (_shoot.Next(0, 11) == 0 && Shoot == true && MissileEnemy.MissileLive == false)
                 {
                     Sound.SoundShipShoot(_soundGame); // Play the shoot sound
                     MissileEnemy.MissileLive = true;
@@ -105,7 +112,7 @@ namespace SpicyInvader
             else
             {
                 // If the random number is equal to 0, launch a missile
-                if (shoot.Next(0, 6) == 0 && Shoot == true && MissileEnemy.MissileLive == false)
+                if (_shoot.Next(0, 6) == 0 && Shoot == true && MissileEnemy.MissileLive == false)
                 {
                     Sound.SoundShipShoot(_soundGame); // Play the shoot sound
                     MissileEnemy.MissileLive = true;
@@ -115,6 +122,11 @@ namespace SpicyInvader
                 }
             }
         }
+
+        /// <summary>
+        /// Start or stop the enemy movement
+        /// </summary>
+        /// <param name="pause">Check if the game is on pause or not</param>
         public void StopShoot(bool pause)
         {
             if (pause == true)
@@ -128,6 +140,9 @@ namespace SpicyInvader
             MissileEnemy.StopShoot(pause);
         }
 
+        /// <summary>
+        /// Destroy the object missile and the ship
+        /// </summary>
         public void Dead()
         {
             _enemyShooting.Stop();

@@ -23,9 +23,10 @@ namespace SpicyInvader
         private PlayerShip _player;                         // The player ship
         private Move _move;                                 // Move the enemies ship
         private int _score = 0;                             // The score of the game
-        private int _stage = 0;                             // The current stage whre is the player
+        private int _stage = 1;                             // The current stage whre is the player
         private bool _difficulty;                           // The difficulty level
         private bool _soundGame;                            // The sound is ON or OFF
+        private bool _redo = true;                          // Redo a while loop
         #endregion
 
         #region Getter - Setter
@@ -76,8 +77,7 @@ namespace SpicyInvader
             _move = new Move(_enemies);
             _player.ShipAction(_move);
 
-            bool redo = true;
-            while (redo)
+            while (_redo)
             {
                 // When the player is dead
                 Thread.Sleep(50);
@@ -96,7 +96,7 @@ namespace SpicyInvader
                     }
                     _score = _player.Score;
                     _player = null;
-                    redo = false;
+                    _redo = false;
                 }
                 else
                 {
@@ -176,7 +176,7 @@ namespace SpicyInvader
         /// <summary>
         /// Get the score of the game
         /// </summary>
-        /// <returns></returns>
+        /// <returns>the score</returns>
         public int GetScore()
         {
             return _score;

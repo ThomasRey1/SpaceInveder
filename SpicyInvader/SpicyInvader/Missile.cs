@@ -237,6 +237,7 @@ namespace SpicyInvader
         /// <summary>
         /// Start or stop the shoot
         /// </summary>
+        /// <param name="pause">Check if the game is on pause or not</param>
         public void StopShoot(bool pause)
         {
             if (pause == true)

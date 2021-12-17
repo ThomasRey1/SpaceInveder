@@ -98,7 +98,7 @@ namespace SpicyInvader
         /// <summary>
         /// Show the main menu
         /// </summary>
-        /// <returns></returns>
+        /// <returns>the choice of the player</returns>
         static byte Show()
         {
             #region Properties

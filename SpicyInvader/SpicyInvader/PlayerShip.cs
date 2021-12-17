@@ -21,7 +21,7 @@ namespace SpicyInvader
         private bool _gamePause = false;        // Check if the game is in pause
         private bool _over = false;             // Check if the game is over or not
         private bool _soundGame;                 // The sound is ON or OFF
-        private const byte _shipSpeed = 1;      // The ship movement speed
+        private const byte _SHIPSPEED = 1;      // The ship movement speed
         private Enemy[] _enemies;               // List of enemies
         #endregion
 
@@ -87,6 +87,7 @@ namespace SpicyInvader
         /// <summary>
         /// Allows the player to move and shoot with the ship and to pause the game
         /// </summary>
+        /// <param name="move">The enemies movement</param>
         public void ShipAction(Move move)
         {
             _over = false;
@@ -107,7 +108,7 @@ namespace SpicyInvader
                         }
                         // Else do nothing
                         else { }
-                        System.Threading.Thread.Sleep(_shipSpeed);
+                        System.Threading.Thread.Sleep(_SHIPSPEED);
                     }
                 }
                 // Else if the result of the keyboard key pressed is positiv and he's equal to the right arrow key
@@ -124,7 +125,7 @@ namespace SpicyInvader
                         }
                         // Else do nothing
                         else { }
-                        System.Threading.Thread.Sleep(_shipSpeed);
+                        System.Threading.Thread.Sleep(_SHIPSPEED);
                     }
                 }
                 // If a key is pressed
@@ -171,6 +172,7 @@ namespace SpicyInvader
                         }
                     }
                 }
+                // if the player is dead, the game is over
                 if(ShipLife == 0)
                 {
                     _over = true;
@@ -183,6 +185,7 @@ namespace SpicyInvader
                         i++;
                     }
                 }
+                // if there is no more of enemies the game is over but it restart immediatly
                 if(i == 0)
                 {
                     _over = true;

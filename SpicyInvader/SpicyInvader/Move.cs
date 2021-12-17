@@ -35,7 +35,7 @@ namespace SpicyInvader
             {
                 _enemyMovement = new Timer(120);
             }
-            _enemyMovement.Elapsed += new ElapsedEventHandler(EnnemyControl);
+            _enemyMovement.Elapsed += new ElapsedEventHandler(EnemyControl);
             _enemyMovement.Start();
         }
 
@@ -44,7 +44,7 @@ namespace SpicyInvader
         /// </summary>
         /// <param name="source"></param>
         /// <param name="e"></param>
-        public void EnnemyControl(object source, ElapsedEventArgs e)
+        public void EnemyControl(object source, ElapsedEventArgs e)
         {
             for (int i = _enemies.Length - 1; i >= 0; i--)
             {
@@ -67,10 +67,12 @@ namespace SpicyInvader
                                 enemy.EnemyDirection = !enemy.EnemyDirection;                                                           // Change the direction of the ship
                             }
                         }
+                        // Speed up the ship
                         if (_enemyMovement.Interval != 80)
                         {
                             _enemyMovement.Interval -= 10;
                         }
+                        // Change the vertical direction of the ship
                         if(_enemies[i].EnemyY == 12)
                         {
                             _upDown = !_upDown;
@@ -84,6 +86,7 @@ namespace SpicyInvader
                         _enemies[i].EnemyX++;
                     }
                 }
+
                 else if (_enemies[i] != null)
                 {
                     // If the lateral position is touching the right border of the window
@@ -103,10 +106,12 @@ namespace SpicyInvader
                                 enemy.EnemyDirection = !enemy.EnemyDirection;                                                           // Change the direction of the ship
                             }
                         }
+                        // Speed up the ship
                         if (_enemyMovement.Interval != 80)
                         {
                             _enemyMovement.Interval -= 10;
                         }
+                        // Change the vertical direction of the ship
                         if (_enemies[i].EnemyY == 3)
                         {
                             _upDown = !_upDown;
@@ -121,6 +126,8 @@ namespace SpicyInvader
                     }
                 }
             }
+
+
             for (int i = 0; i != _enemies.Length; i++)
             {
                 if (_enemies[i] != null && _upDown == false)
@@ -143,10 +150,12 @@ namespace SpicyInvader
                                 enemy.EnemyDirection = !enemy.EnemyDirection;                                                           // Change the direction of the ship
                             }
                         }
+                        // Speed up the ship
                         if (_enemyMovement.Interval != 80)
                         {
                             _enemyMovement.Interval -= 10;
                         }
+                        // Change the vertical direction of the ship
                         if (_enemies[i].EnemyY == 12)
                         {
                             _upDown = !_upDown;
@@ -160,6 +169,7 @@ namespace SpicyInvader
                         _enemies[i].EnemyX--;
                     }
                 }
+
                 else if (_enemies[i] != null)
                 {
                     // If the lateral position is touching the left border of the window
@@ -180,10 +190,12 @@ namespace SpicyInvader
                                 enemy.EnemyDirection = !enemy.EnemyDirection;                                                           // Change the direction of the ship
                             }
                         }
+                        // Speed up the ship
                         if(_enemyMovement.Interval != 80)
                         {
                             _enemyMovement.Interval -= 10;
                         }
+                        // Change the vertical direction of the ship
                         if (_enemies[i].EnemyY == 3)
                         {
                             _upDown = !_upDown;
@@ -249,6 +261,7 @@ namespace SpicyInvader
         /// <summary>
         /// Start or stop the enemy movement
         /// </summary>
+        /// <param name="pause">Check if the game is on pause or not</param>
         public void StopMove(bool pause)
         {
             if (pause == true)
