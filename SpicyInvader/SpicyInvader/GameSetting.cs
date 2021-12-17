@@ -20,23 +20,16 @@ namespace SpicyInvader
         // Properties
         private List<int> _posXBunker = new List<int>();    // List of bunker positions
         private Enemy[] _enemies = new Enemy[20];           // List of enemies
-        private PlayerShip player;                          // The player ship
-        private Move move;                                  // Move the enemies ship
-        private int score = 0;                              // The score of the game
-        private int stage = 0;                              // The current stage whre is the player
+        private PlayerShip _player;                         // The player ship
+        private Move _move;                                 // Move the enemies ship
+        private int _score = 0;                             // The score of the game
+        private int _stage = 0;                             // The current stage whre is the player
+        private bool _difficulty;                           // The difficulty level
+        private bool _soundGame;                            // The sound is ON or OFF
         #endregion
 
         #region Getter - Setter
         //Getter - Setter
-        /// <summary>
-        /// Difficulty property definition
-        /// </summary>
-        public bool Difficulty { get; set; }            // The difficulty level
-
-        /// <summary>
-        /// SoundGame property definition
-        /// </summary>
-        public bool SoundGame { get; set; }             // The sound is ON or OFF
         #endregion
 
         #region Method
@@ -46,8 +39,8 @@ namespace SpicyInvader
         /// <param name="difficulty"></param>
         public GameSetting(bool difficulty, bool soundGame)
         {
-            this.Difficulty = difficulty;
-            this.SoundGame = soundGame;
+            this._difficulty = difficulty;
+            this._soundGame = soundGame;
         }
 
         /// <summary>
@@ -65,7 +58,7 @@ namespace SpicyInvader
                 }
             }
 
-            player = new PlayerShip(Console.WindowWidth / 2 - 3, Console.WindowHeight - 7, SoundGame, _posXBunker, _enemies);       // Create the player ship    
+            _player = new PlayerShip(Console.WindowWidth / 2 - 3, Console.WindowHeight - 7, _soundGame, _posXBunker, _enemies);       // Create the player ship    
 
             CreatEnemy();
             Console.SetCursorPosition(Console.WindowLeft, Console.WindowHeight - 6);
@@ -76,23 +69,23 @@ namespace SpicyInvader
             Console.SetCursorPosition(Console.WindowLeft + 10, Console.WindowHeight - 3);
             Console.Write("Vie : ♥ ♥ ♥");
             Console.SetCursorPosition(Console.WindowWidth / 2 - 5, Console.WindowHeight - 3);
-            Console.Write("Score : {0}", score);
+            Console.Write("Score : {0}", _score);
             Console.SetCursorPosition(Console.WindowWidth - 20, Console.WindowHeight - 3);
-            Console.Write("Stage : {0}", stage);
+            Console.Write("Stage : {0}", _stage);
 
-            move = new Move(_enemies);
-            player.ShipAction(move);
+            _move = new Move(_enemies);
+            _player.ShipAction(_move);
 
             bool redo = true;
             while (redo)
             {
                 // When the player is dead
                 Thread.Sleep(50);
-                if (player.ShipLife == 0)
+                if (_player.ShipLife == 0)
                 {
                     Console.Clear();
-                    move.StopMove(true);
-                    move = null;
+                    _move.StopMove(true);
+                    _move = null;
                     for (byte i = 0; i < _enemies.Length; i++)
                     {
                         if (_enemies[i] != null)
@@ -101,14 +94,14 @@ namespace SpicyInvader
                         }
                         _enemies[i] = null;
                     }
-                    score = player.Score;
-                    player = null;
+                    _score = _player.Score;
+                    _player = null;
                     redo = false;
                 }
                 else
                 {
-                    move.StopMove(true);
-                    move = null;
+                    _move.StopMove(true);
+                    _move = null;
                     for (byte i = 0; i < _enemies.Length; i++)
                     {
                         if (_enemies[i] != null)
@@ -118,17 +111,17 @@ namespace SpicyInvader
                         _enemies[i] = null;
                     }
 
-                    Console.MoveBufferArea(player.ShipX, player.ShipY, player.ShipForm.Length, 1, Console.WindowWidth / 2 - 3, Console.WindowHeight - 7);
-                    player.ShipX = Console.WindowWidth / 2 - 3;
-                    Console.SetCursorPosition(player.ShipX, player.ShipY);
-                    Console.Write(player.ShipForm);
-                    stage++;
+                    Console.MoveBufferArea(_player.ShipX, _player.ShipY, _player.ShipForm.Length, 1, Console.WindowWidth / 2 - 3, Console.WindowHeight - 7);
+                    _player.ShipX = Console.WindowWidth / 2 - 3;
+                    Console.SetCursorPosition(_player.ShipX, _player.ShipY);
+                    Console.Write(_player.ShipForm);
+                    _stage++;
                     Console.SetCursorPosition(Console.WindowWidth - 12, Console.WindowHeight - 3);
-                    Console.Write(stage);
+                    Console.Write(_stage);
 
                     CreatEnemy();
-                    move = new Move(_enemies);
-                    player.ShipAction(move);
+                    _move = new Move(_enemies);
+                    _player.ShipAction(_move);
                 }
             }
         }
@@ -141,7 +134,7 @@ namespace SpicyInvader
             int x = 0;
             for (int i = 0; i != 4; i++)
             {
-                Enemy enemy = new Enemy(Console.WindowWidth / 3 + 5, Console.WindowTop + 2 * i + 2, SoundGame, true, true, _posXBunker, player);      // Create an enemy
+                Enemy enemy = new Enemy(Console.WindowWidth / 3 + 5, Console.WindowTop + 2 * i + 2, _soundGame, true, _posXBunker, _player, _difficulty);      // Create an enemy
                 _enemies[x] = enemy;
                 x++;
                 Thread.Sleep(100);
@@ -149,7 +142,7 @@ namespace SpicyInvader
 
             for (int i = 0; i != 4; i++)
             {
-                Enemy enemy = new Enemy(Console.WindowWidth / 3 + 5 * 2 + 1, Console.WindowTop + 2 * i + 2, SoundGame, true, true, _posXBunker, player);      // Create an enemy
+                Enemy enemy = new Enemy(Console.WindowWidth / 3 + 5 * 2 + 1, Console.WindowTop + 2 * i + 2, _soundGame, true, _posXBunker, _player, _difficulty);      // Create an enemy
                 _enemies[x] = enemy;
                 x++;
                 Thread.Sleep(100);
@@ -157,7 +150,7 @@ namespace SpicyInvader
 
             for (int i = 0; i != 4; i++)
             {
-                Enemy enemy = new Enemy(Console.WindowWidth / 3 + 5 * 3 + 2, Console.WindowTop + 2 * i + 2, SoundGame, true, true, _posXBunker, player);      // Create an enemy
+                Enemy enemy = new Enemy(Console.WindowWidth / 3 + 5 * 3 + 2, Console.WindowTop + 2 * i + 2, _soundGame, true, _posXBunker, _player, _difficulty);      // Create an enemy
                 _enemies[x] = enemy;
                 x++;
                 System.Threading.Thread.Sleep(100);
@@ -165,7 +158,7 @@ namespace SpicyInvader
 
             for (int i = 0; i != 4; i++)
             {
-                Enemy enemy = new Enemy(Console.WindowWidth / 3 + 5 * 4 + 3, Console.WindowTop + 2 * i + 2, SoundGame, true, true, _posXBunker, player);      // Create an enemy
+                Enemy enemy = new Enemy(Console.WindowWidth / 3 + 5 * 4 + 3, Console.WindowTop + 2 * i + 2, _soundGame, true, _posXBunker, _player, _difficulty);      // Create an enemy
                 _enemies[x] = enemy;
                 x++;
                 Thread.Sleep(100);
@@ -173,7 +166,7 @@ namespace SpicyInvader
 
             for (int i = 0; i != 4; i++)
             {
-                Enemy enemy = new Enemy(Console.WindowWidth / 3 + 5 * 5 + 4, Console.WindowTop + 2 * i + 2, SoundGame, true, true, _posXBunker, player);      // Create an enemy
+                Enemy enemy = new Enemy(Console.WindowWidth / 3 + 5 * 5 + 4, Console.WindowTop + 2 * i + 2, _soundGame, true, _posXBunker, _player, _difficulty);      // Create an enemy
                 _enemies[x] = enemy;
                 x++;
                 Thread.Sleep(100);
@@ -186,7 +179,7 @@ namespace SpicyInvader
         /// <returns></returns>
         public int GetScore()
         {
-            return score;
+            return _score;
         }
         #endregion
     }

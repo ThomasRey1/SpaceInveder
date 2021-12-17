@@ -19,8 +19,8 @@ namespace SpicyInvader
         #region Properties
         // Properties
         private Enemy[] _enemies;                           // List of enemies
-        private Timer enemyMovement = new Timer(200);       // Loop to move the enemies ship
-        private bool upDown = false;                        // look if the enemies ship go up or go down
+        private Timer _enemyMovement = new Timer(200);      // Loop to move the enemies ship
+        private bool _upDown = false;                       // look if the enemies ship go up or go down
         #endregion
 
         #region Method
@@ -31,8 +31,12 @@ namespace SpicyInvader
         public Move(Enemy[] enemies)
         {
             this._enemies = enemies;
-            enemyMovement.Elapsed += new ElapsedEventHandler(EnnemyControl);
-            enemyMovement.Start();
+            if(_enemies[0].Difficulty == true)
+            {
+                _enemyMovement = new Timer(120);
+            }
+            _enemyMovement.Elapsed += new ElapsedEventHandler(EnnemyControl);
+            _enemyMovement.Start();
         }
 
         /// <summary>
@@ -44,7 +48,7 @@ namespace SpicyInvader
         {
             for (int i = _enemies.Length - 1; i >= 0; i--)
             {
-                if (_enemies[i] != null && upDown == false)
+                if (_enemies[i] != null && _upDown == false)
                 {
                     // If the lateral position is touching the right border of the window
                     if (_enemies[i].EnemyX + 5 == Console.WindowWidth)
@@ -63,13 +67,13 @@ namespace SpicyInvader
                                 enemy.EnemyDirection = !enemy.EnemyDirection;                                                           // Change the direction of the ship
                             }
                         }
-                        if (enemyMovement.Interval != 80)
+                        if (_enemyMovement.Interval != 80)
                         {
-                            enemyMovement.Interval -= 10;
+                            _enemyMovement.Interval -= 10;
                         }
                         if(_enemies[i].EnemyY == 12)
                         {
-                            upDown = !upDown;
+                            _upDown = !_upDown;
                         }
                     }
 
@@ -99,13 +103,13 @@ namespace SpicyInvader
                                 enemy.EnemyDirection = !enemy.EnemyDirection;                                                           // Change the direction of the ship
                             }
                         }
-                        if (enemyMovement.Interval != 80)
+                        if (_enemyMovement.Interval != 80)
                         {
-                            enemyMovement.Interval -= 10;
+                            _enemyMovement.Interval -= 10;
                         }
                         if (_enemies[i].EnemyY == 3)
                         {
-                            upDown = !upDown;
+                            _upDown = !_upDown;
                         }
                     }
 
@@ -119,7 +123,7 @@ namespace SpicyInvader
             }
             for (int i = 0; i != _enemies.Length; i++)
             {
-                if (_enemies[i] != null && upDown == false)
+                if (_enemies[i] != null && _upDown == false)
                 {
                     // If the lateral position is touching the left border of the window
                     if (_enemies[i].EnemyX == Console.WindowLeft)
@@ -139,13 +143,13 @@ namespace SpicyInvader
                                 enemy.EnemyDirection = !enemy.EnemyDirection;                                                           // Change the direction of the ship
                             }
                         }
-                        if (enemyMovement.Interval != 80)
+                        if (_enemyMovement.Interval != 80)
                         {
-                            enemyMovement.Interval -= 10;
+                            _enemyMovement.Interval -= 10;
                         }
                         if (_enemies[i].EnemyY == 12)
                         {
-                            upDown = !upDown;
+                            _upDown = !_upDown;
                         }
                     }
 
@@ -176,13 +180,13 @@ namespace SpicyInvader
                                 enemy.EnemyDirection = !enemy.EnemyDirection;                                                           // Change the direction of the ship
                             }
                         }
-                        if(enemyMovement.Interval != 80)
+                        if(_enemyMovement.Interval != 80)
                         {
-                            enemyMovement.Interval -= 10;
+                            _enemyMovement.Interval -= 10;
                         }
                         if (_enemies[i].EnemyY == 3)
                         {
-                            upDown = !upDown;
+                            _upDown = !_upDown;
                         }
                     }
 
@@ -199,18 +203,44 @@ namespace SpicyInvader
                 // if the enemy can shoot or not
                 if (_enemies[i] != null)
                 {
+                    // The first ship can shoot
                     if (i == 3 || i == 7 || i == 11 || i == 15 || i == 19)
                     {
                         _enemies[i].Shoot = true;
                     }
-                    // If the ship forward is destroy, so the ship beward can shoot
-                    else if (_enemies[i + 1] == null)
+                    // For each ship, check if all of ship ahead is dead and if true, then they can shoot
+                    else if (i == 2 || i == 6 || i == 10 || i == 14 || i == 18)
                     {
-                        _enemies[i].Shoot = true;
+                        if (_enemies[i + 1] == null)
+                        {
+                            _enemies[i].Shoot = true;
+                        }
+                        else
+                        {
+                            _enemies[i].Shoot = false;
+                        }
                     }
-                    else
+                    else if (i == 1 || i == 5 || i == 9 || i == 13 || i == 17)
                     {
-                        _enemies[i].Shoot = false;
+                        if (_enemies[i + 1] == null && _enemies[i + 2] == null)
+                        {
+                            _enemies[i].Shoot = true;
+                        }
+                        else
+                        {
+                            _enemies[i].Shoot = false;
+                        }
+                    }
+                    else if (i == 0 || i == 4 || i == 8 || i == 12 || i == 16)
+                    {
+                        if (_enemies[i + 1] == null && _enemies[i + 2] == null && _enemies[i + 3] == null)
+                        {
+                            _enemies[i].Shoot = true;
+                        }
+                        else
+                        {
+                            _enemies[i].Shoot = false;
+                        }
                     }
                 }
             }
@@ -223,11 +253,11 @@ namespace SpicyInvader
         {
             if (pause == true)
             {
-                enemyMovement.Stop();
+                _enemyMovement.Stop();
             }
             else
             {
-                enemyMovement.Start();
+                _enemyMovement.Start();
             }
         }
         #endregion

@@ -19,9 +19,10 @@ namespace SpicyInvader
         #region Properties
         //Properties
         private bool _gamePause = false;        // Check if the game is in pause
+        private bool _over = false;             // Check if the game is over or not
+        private bool _soundGame;                 // The sound is ON or OFF
         private const byte _shipSpeed = 1;      // The ship movement speed
         private Enemy[] _enemies;               // List of enemies
-        private bool _over = false;             // Check if the game is over or not
         #endregion
 
         #region Getter - Setter
@@ -39,17 +40,7 @@ namespace SpicyInvader
         /// <summary>
         /// ShipY property definition
         /// </summary>
-        public int ShipY { get; set; }                      // The vertical position of the ship
-
-        /// <summary>
-        /// SoundGame property definition
-        /// </summary>
-        public bool SoundGame { get; set; }                 // The sound is ON or OFF
-
-        /// <summary>
-        /// PosXBunker property definition
-        /// </summary>
-        public List<int> PosXBunker { get; set; }           // Postition of the bunker
+        public int ShipY { get; }                           // The vertical position of the ship
 
         /// <summary>
         /// ShipLife property definition
@@ -74,17 +65,18 @@ namespace SpicyInvader
         /// <param name="shipX">The lateral position of the ship</param>
         /// <param name="shipY">The vertical position of the ship</param>
         /// <param name="soundGame">The sound is ON or OFF</param>
+        /// <param name="posXBunker">Postition of the bunker</param>
+        /// <param name="enemies">List of enemies</param>
         public PlayerShip(int shipX, int shipY, bool soundGame, List<int> posXBunker, Enemy[] enemies)
         {
             ShipForm = "├─┴─┤";
             this.ShipX = shipX;
             this.ShipY = shipY;
-            this.SoundGame = soundGame;
-            this.PosXBunker = posXBunker;
+            this._soundGame = soundGame;
             this._enemies = enemies;
             this.ShipLife = 3;
             this.Score = 0;
-            this.MissilePlayer = new Missile(1, 1, _gamePause, false, PosXBunker, _enemies);
+            this.MissilePlayer = new Missile(1, 1, false, posXBunker, _enemies, this);
             Console.SetCursorPosition(ShipX, ShipY);
             Console.Write(ShipForm);
         }
@@ -98,7 +90,6 @@ namespace SpicyInvader
         public void ShipAction(Move move)
         {
             _over = false;
-            MissilePlayer.Player = this;
             short GetAsyncKeyStateResult = GetAsyncKeyState(32); // Result of the keyboard key pressed
             do
             {
@@ -156,7 +147,7 @@ namespace SpicyInvader
                         // Check if a missile is already launched
                         if (MissilePlayer.MissileLive == false)
                         {
-                            Sound.SoundShipShoot(SoundGame); // Play the shoot sound
+                            Sound.SoundShipShoot(_soundGame); // Play the shoot sound
                             MissilePlayer.MissileLive = true;
                             // Reposition the location of the missile
                             MissilePlayer.MissileY = ShipY - 1;

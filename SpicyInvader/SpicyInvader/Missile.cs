@@ -19,8 +19,11 @@ namespace SpicyInvader
         #region Properties
         //Properties
         private string _missileShap = "|";              // The missile form
-        private Timer shootEnemy = new Timer(50);      // Loop to lower the enemy missiles
-        private Timer shootPlayer = new Timer(50);     // Loop to lower the player missiles
+        private Timer _shootEnemy = new Timer(50);      // Loop to lower the enemy missiles
+        private Timer _shootPlayer = new Timer(50);     // Loop to lower the player missiles
+        private List<int> _posXBunker;                  // Postition of the bunker
+        private Enemy[] _enemies;                       // List of enemies
+        private PlayerShip _player;                     // The player ship
         #endregion
 
         #region Getter - Setter
@@ -39,21 +42,6 @@ namespace SpicyInvader
         /// MissileLive property definition
         /// </summary>
         public bool MissileLive { get; set; }               // The missile is activated or not
-
-        /// <summary>
-        /// PosXBunker property definition
-        /// </summary>
-        public List<int> PosXBunker { get; set; }           // Postition of the bunker
-
-        /// <summary>
-        /// Enemies property definition
-        /// </summary>
-        public Enemy[] Enemies { get; set; }              // List of enemies
-
-        /// <summary>
-        /// Player property definition
-        /// </summary>
-        public PlayerShip Player { get; set; }              // The player ship
         #endregion
 
         #region Method
@@ -62,16 +50,19 @@ namespace SpicyInvader
         /// </summary>
         /// <param name="missileX">The lateral position of the missile</param>
         /// <param name="missileY">The vertical position of the missile</param>
-        /// <param name="missilePause">If the missile is activated or not</param>
-        /// <param name="missileLive">If the game is in pause, the missile too</param>
-        public Missile(int missileX, int missileY, bool missilePause, bool missileLive, List<int> posXBunker, Enemy[] enemies)
+        /// <param name="missileLive">The missile is activated or not</param>
+        /// <param name="posXBunker">Postition of the bunker</param>
+        /// <param name="enemies">List of enemies</param>
+        /// <param name="player">The player ship</param>
+        public Missile(int missileX, int missileY, bool missileLive, List<int> posXBunker, Enemy[] enemies, PlayerShip player)
         {
             this.MissileX = missileX;
             this.MissileY = missileY;
             this.MissileLive = missileLive;
-            this.PosXBunker = posXBunker;
-            this.Enemies = enemies;
-            shootEnemy = null;
+            this._posXBunker = posXBunker;
+            this._enemies = enemies;
+            this._player = player;
+            _shootEnemy = null;
             SetTimerPlayer();
         }
 
@@ -80,12 +71,15 @@ namespace SpicyInvader
         /// </summary>
         /// <param name="missileX">The lateral position of the missile</param>
         /// <param name="missileY">The vertical position of the missile</param>
-        /// <param name="missilePause">If the game is in pause, the missile too</param>
-        public Missile(int missileX, int missileY, bool missilePause)
+        /// <param name="posXBunker">Postition of the bunker</param>
+        /// <param name="player">The player ship</param>
+        public Missile(int missileX, int missileY, List<int> posXBunker, PlayerShip player)
         {
             this.MissileX = missileX;
             this.MissileY = missileY;
-            shootPlayer = null;
+            this._posXBunker = posXBunker;
+            this._player = player;
+            _shootPlayer = null;
             SetTimerEnemy();
         }
 
@@ -94,7 +88,7 @@ namespace SpicyInvader
         /// </summary>
         public void SetTimerPlayer()
         {
-            shootPlayer.Elapsed += new ElapsedEventHandler(MissilePlayerMove);
+            _shootPlayer.Elapsed += new ElapsedEventHandler(MissilePlayerMove);
         }
 
         /// <summary>
@@ -102,7 +96,7 @@ namespace SpicyInvader
         /// </summary>
         public void SetTimerEnemy()
         {
-            shootEnemy.Elapsed += new ElapsedEventHandler(MissileEnemyMove);
+            _shootEnemy.Elapsed += new ElapsedEventHandler(MissileEnemyMove);
         }
 
         /// <summary>
@@ -112,7 +106,7 @@ namespace SpicyInvader
         {
                 Console.SetCursorPosition(MissileX, MissileY);  // Position the cursor in the location of the missile
                 Console.Write(_missileShap);                    // Create the missile
-                shootPlayer.Start();
+                _shootPlayer.Start();
         }
 
         /// <summary>
@@ -123,34 +117,34 @@ namespace SpicyInvader
         public void MissilePlayerMove(object source, ElapsedEventArgs e)
         {
                 // Check if the missile touch a pixel of a bunker
-                for (int i = 0; i < PosXBunker.Count; i++)
+                for (int i = 0; i < _posXBunker.Count; i++)
                 {
-                    if (MissileY == 20 && MissileX == PosXBunker[i])
+                    if (MissileY == 20 && MissileX == _posXBunker[i])
                     {
                         Console.MoveBufferArea(MissileX, MissileY + 1, 1, 1, MissileX, MissileY);
-                        PosXBunker[i] = Console.WindowTop;
+                        _posXBunker[i] = Console.WindowTop;
                         MissileY = Console.WindowTop;
-                        PosXBunker.Remove(PosXBunker[i]);
-                        shootPlayer.Stop();
+                        _posXBunker.Remove(_posXBunker[i]);
+                        _shootPlayer.Stop();
                     }
                 }
                 
-                for (int i = 0; i != Enemies.Length; i++)
+                for (int i = 0; i != _enemies.Length; i++)
                 {
-                    if (Enemies[i] != null && MissileY == Enemies[i].EnemyY)
+                    if (_enemies[i] != null && MissileY == _enemies[i].EnemyY)
                     {
                         // Check if the missile touch a pixel of a enemy
-                        if (MissileX >= Enemies[i].EnemyX && MissileX <= Enemies[i].EnemyX + Enemies[i]._shipForm.Length - 1)
+                        if (MissileX >= _enemies[i].EnemyX && MissileX <= _enemies[i].EnemyX + _enemies[i].ShipForm.Length - 1)
                         {
                             Console.MoveBufferArea(0, 0, 1, 1, this.MissileX, this.MissileY);
-                            Console.MoveBufferArea(0, 0, 5, 1, Enemies[i].EnemyX, Enemies[i].EnemyY);
-                            Enemies[i].MissileEnemy.shootEnemy.Stop();
-                            Enemies[i].Dead();
-                            Enemies[i] = null;
+                            Console.MoveBufferArea(0, 0, 5, 1, _enemies[i].EnemyX, _enemies[i].EnemyY);
+                            _enemies[i].MissileEnemy._shootEnemy.Stop();
+                            _enemies[i].Dead();
+                            _enemies[i] = null;
                             MissileY = Console.WindowTop;
-                            Player.Score += 100;
+                            _player.Score += 100;
                             Console.SetCursorPosition(Console.WindowWidth / 2 + 3, Console.WindowHeight - 3);
-                            Console.Write(Player.Score);
+                            Console.Write(_player.Score);
                         }
                     }
                 }
@@ -168,7 +162,7 @@ namespace SpicyInvader
                 {
                     Console.MoveBufferArea(MissileX - 1, MissileY, 1, 1, MissileX, MissileY);
                     MissileLive = false;
-                    shootPlayer.Stop();
+                    _shootPlayer.Stop();
                 }
         }
 
@@ -179,7 +173,7 @@ namespace SpicyInvader
         {
                 Console.SetCursorPosition(MissileX, MissileY); // Position the cursor in the location of the missile
                 Console.Write(_missileShap);                   // Create the missile
-                shootEnemy.Start();
+                _shootEnemy.Start();
         }
 
         /// <summary>
@@ -190,39 +184,39 @@ namespace SpicyInvader
         public void MissileEnemyMove(object source, ElapsedEventArgs e)
         {
                 // Check if the missile touch a pixel of a bunker
-                for (int i = 0; i < PosXBunker.Count; i++)
+                for (int i = 0; i < _posXBunker.Count; i++)
                 {
-                    if (MissileY == 20 && MissileX == PosXBunker[i])
+                    if (MissileY == 20 && MissileX == _posXBunker[i])
                     {
                         Console.MoveBufferArea(1, 1, 1, 1, MissileX, MissileY);
-                        PosXBunker[i] = Console.WindowTop;
+                        _posXBunker[i] = Console.WindowTop;
                         MissileY = Console.WindowHeight - 1;
-                        PosXBunker.Remove(PosXBunker[i]);
-                        shootEnemy.Stop();
+                        _posXBunker.Remove(_posXBunker[i]);
+                        _shootEnemy.Stop();
                     }
                 }
                 // Check if the missile touch a pixel of the player
-                if (MissileY == Player.ShipY - 1)
+                if (MissileY == _player.ShipY - 1)
                 {
-                    if (MissileX >= Player.ShipX && MissileX <= Player.ShipX + Player.ShipForm.Length - 1)
+                    if (MissileX >= _player.ShipX && MissileX <= _player.ShipX + _player.ShipForm.Length - 1)
                     {
                         Console.MoveBufferArea(1, 1, 1, 1, MissileX, MissileY);
                         MissileY = Console.WindowHeight;
-                        Console.MoveBufferArea(1, 1, 2, 1, Console.WindowLeft + 21 - (6 / Player.ShipLife), Console.WindowHeight - 3);
-                        Player.ShipLife -= 1;
-                        shootEnemy.Stop();
+                        Console.MoveBufferArea(1, 1, 2, 1, Console.WindowLeft + 21 - (6 / _player.ShipLife), Console.WindowHeight - 3);
+                        _player.ShipLife -= 1;
+                        _shootEnemy.Stop();
                     }
                 }
 
                 // Check if the missile touch a another player's missile
-                if (MissileX == Player.MissilePlayer.MissileX && MissileY >= Player.MissilePlayer.MissileY)
+                if (MissileX == _player.MissilePlayer.MissileX && MissileY >= _player.MissilePlayer.MissileY)
                 {
                     Console.MoveBufferArea(0, 0, 1, 1, MissileX, MissileY);
                     MissileLive = false;
-                    shootEnemy.Stop();
-                    Console.MoveBufferArea(1, 1, 1, 1, Player.MissilePlayer.MissileX, Player.MissilePlayer.MissileY);
-                    Player.MissilePlayer.MissileLive = false;
-                    Player.MissilePlayer.shootPlayer.Stop();
+                    _shootEnemy.Stop();
+                    Console.MoveBufferArea(1, 1, 1, 1, _player.MissilePlayer.MissileX, _player.MissilePlayer.MissileY);
+                    _player.MissilePlayer.MissileLive = false;
+                    _player.MissilePlayer._shootPlayer.Stop();
                 }
 
                 // Move the missile as long as the missile don't touch the bottom
@@ -236,7 +230,7 @@ namespace SpicyInvader
                 {
                     Console.MoveBufferArea(1, 1, 1, 1, MissileX, MissileY);
                     MissileLive = false;
-                    shootEnemy.Stop();
+                    _shootEnemy.Stop();
                 }
         }
 
@@ -247,24 +241,24 @@ namespace SpicyInvader
         {
             if (pause == true)
             {
-                if (shootPlayer != null)
+                if (_shootPlayer != null)
                 {
-                    shootPlayer.Stop();
+                    _shootPlayer.Stop();
                 }
                 else
                 {
-                    shootEnemy.Stop();
+                    _shootEnemy.Stop();
                 }
             }
             else
             {
-                if (shootPlayer != null)
+                if (_shootPlayer != null)
                 {
-                    shootPlayer.Start();
+                    _shootPlayer.Start();
                 }
                 else
                 {
-                    shootEnemy.Start();
+                    _shootEnemy.Start();
                 }
             }
         }
