@@ -27,3 +27,10 @@ C:\Users\thomr\OneDrive\Bureau\SpicyInvader\SpicyInvader\obj\Debug\SpicyInvader.
 C:\Users\thomr\OneDrive\Bureau\SpicyInvader\SpicyInvader\obj\Debug\SpicyInvader.csproj.CoreCompileInputs.cache
 C:\Users\thomr\OneDrive\Bureau\SpicyInvader\SpicyInvader\obj\Debug\SpicyInvader.exe
 C:\Users\thomr\OneDrive\Bureau\SpicyInvader\SpicyInvader\obj\Debug\SpicyInvader.pdb
+C:\Users\thomr\OneDrive\Bureau\SpicyInvader\SpicyInvader\obj\Debug\Interop.WMPLib.dll
+C:\Users\thomr\OneDrive\Bureau\SpicyInvader\SpicyInvader\obj\Debug\AxInterop.WMPLib.dll
+C:\Users\thomr\OneDrive\Bureau\SpicyInvader\SpicyInvader\obj\Debug\SpicyInvader.csproj.ResolveComReference.cache
+C:\Users\thomr\OneDrive\Bureau\SpicyInvader\SpicyInvader\obj\Debug\SpicyInvader.csproj.GenerateResource.cache
+C:\Users\thomr\OneDrive\Bureau\SpicyInvader\SpicyInvader\bin\Debug\Interop.WMPLib.dll
+C:\Users\thomr\OneDrive\Bureau\SpicyInvader\SpicyInvader\bin\Debug\AxInterop.WMPLib.dll
+C:\Users\thomr\OneDrive\Bureau\SpicyInvader\SpicyInvader\obj\Debug\SpicyInvader.Properties.Resources.resources

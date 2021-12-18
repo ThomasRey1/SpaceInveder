@@ -136,6 +136,7 @@ namespace SpicyInvader
                         // Check if the missile touch a pixel of a enemy
                         if (MissileX >= _enemies[i].EnemyX && MissileX <= _enemies[i].EnemyX + _enemies[i].ShipForm.Length - 1)
                         {
+                            Sound.SoundShipExplosed(_enemies[i].SoundGame);
                             Console.MoveBufferArea(0, 0, 1, 1, this.MissileX, this.MissileY);
                             Console.MoveBufferArea(0, 0, 5, 1, _enemies[i].EnemyX, _enemies[i].EnemyY);
                             _enemies[i].MissileEnemy._shootEnemy.Stop();

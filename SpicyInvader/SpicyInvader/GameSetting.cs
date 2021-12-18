@@ -96,8 +96,12 @@ namespace SpicyInvader
                     }
                     _score = _player.Score;
                     _player = null;
-                    _redo = false;
+                    _redo = false; 
+                    Console.SetCursorPosition(Console.WindowWidth / 2 - 5, Console.WindowHeight / 2);
+                    Console.Write("Game Over");
+                    Console.ReadKey(true);
                 }
+                // When all enemies are dead
                 else
                 {
                     _move.StopMove(true);

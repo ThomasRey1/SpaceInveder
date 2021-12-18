@@ -26,6 +26,11 @@ namespace SpicyInvader
         #region Getter - Setter
         //Getter - Setter
         /// <summary>
+        /// SoundGame property definition
+        /// </summary>
+        public bool SoundGame { get { return _soundGame; } }
+
+        /// <summary>
         /// ShipForm property definition
         /// </summary>
         public string ShipForm { get; }                                    // The shap of the enemy's ship
@@ -102,11 +107,18 @@ namespace SpicyInvader
                 // If the random number is equal to 0, launch a missile
                 if (_shoot.Next(0, 11) == 0 && Shoot == true && MissileEnemy.MissileLive == false)
                 {
-                    Sound.SoundShipShoot(_soundGame); // Play the shoot sound
-                    MissileEnemy.MissileLive = true;
-                    MissileEnemy.MissileY = this.EnemyY + 1;
-                    MissileEnemy.MissileX = this.EnemyX + ShipForm.Length / 2;
-                    MissileEnemy.MissileEnemyCreate();
+                    try
+                    {
+                        Sound.SoundShipShoot(_soundGame); // Play the shoot sound
+                        MissileEnemy.MissileLive = true;
+                        MissileEnemy.MissileY = this.EnemyY + 1;
+                        MissileEnemy.MissileX = this.EnemyX + ShipForm.Length / 2;
+                        MissileEnemy.MissileEnemyCreate();
+                    }
+                    catch (ArgumentNullException)
+                    {
+
+                    }
                 }
             }
             else
@@ -114,11 +126,18 @@ namespace SpicyInvader
                 // If the random number is equal to 0, launch a missile
                 if (_shoot.Next(0, 6) == 0 && Shoot == true && MissileEnemy.MissileLive == false)
                 {
-                    Sound.SoundShipShoot(_soundGame); // Play the shoot sound
-                    MissileEnemy.MissileLive = true;
-                    MissileEnemy.MissileY = this.EnemyY + 1;
-                    MissileEnemy.MissileX = this.EnemyX + ShipForm.Length / 2;
-                    MissileEnemy.MissileEnemyCreate();
+                    try
+                    {
+                        Sound.SoundShipShoot(_soundGame); // Play the shoot sound
+                        MissileEnemy.MissileLive = true;
+                        MissileEnemy.MissileY = this.EnemyY + 1;
+                        MissileEnemy.MissileX = this.EnemyX + ShipForm.Length / 2;
+                        MissileEnemy.MissileEnemyCreate();
+                    }
+                    catch (ArgumentNullException)
+                    {
+
+                    }
                 }
             }
         }

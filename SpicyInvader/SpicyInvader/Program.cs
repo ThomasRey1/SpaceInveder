@@ -38,7 +38,7 @@ namespace SpicyInvader
             //Console.Read();
 
             Console.CursorVisible = false;
-            Sound.SoundMenu(soundGame);
+            Sound.MusicMenu(soundGame);
             Console.WindowWidth = 41;
             Console.WindowHeight = 20;
 
@@ -56,9 +56,11 @@ namespace SpicyInvader
                     Console.WindowWidth = 120;
                     Console.WindowHeight = 36;
                     GameSetting NewGame = new GameSetting(difficulty, soundGame);
+                    Sound.MusicGame(soundGame);
                     NewGame.GameStarted();
                     Console.Clear();
 
+                    Sound.MusicMenu(soundGame);
                     // Enter the name of the player and him score
                     Console.WindowWidth = 41;
                     Console.WindowHeight = 20;
@@ -136,6 +138,7 @@ namespace SpicyInvader
                 // Move down the option
                 if (keyInfo.Key == ConsoleKey.DownArrow)
                 {
+                    Sound.ChoosOption(soundGame);
                     choice++;
                     if (choice > 5)
                     {
@@ -156,6 +159,7 @@ namespace SpicyInvader
                 // Move up the option
                 else if (keyInfo.Key == ConsoleKey.UpArrow)
                 {
+                    Sound.ChoosOption(soundGame);
                     choice--;
                     if (choice < 1)
                     {
@@ -175,6 +179,7 @@ namespace SpicyInvader
                 }
                 else if (keyInfo.Key == ConsoleKey.Spacebar || keyInfo.Key == ConsoleKey.Enter)
                 {
+                    Sound.SelectOption(soundGame);
                     main = false;
                 }
             }
@@ -237,6 +242,7 @@ namespace SpicyInvader
                 // Move up the option
                 if (keyInfo.Key == ConsoleKey.DownArrow)
                 {
+                    Sound.ChoosOption(soundGame);
                     option++;
                     if (option > 3)
                     {
@@ -257,6 +263,7 @@ namespace SpicyInvader
                 // Move down the option
                 else if (keyInfo.Key == ConsoleKey.UpArrow)
                 {
+                    Sound.ChoosOption(soundGame);
                     option--;
                     if (option < 1)
                     {
@@ -277,10 +284,11 @@ namespace SpicyInvader
                 // If the player presses the spacebar or the enter, then activate or deactivate the option in question
                 else if (keyInfo.Key == ConsoleKey.Spacebar || keyInfo.Key == ConsoleKey.Enter)
                 {
+                    Sound.SelectOption(soundGame);
                     if (option == 1)
                     {
                         soundGame = !soundGame;
-                        Sound.SoundMenu(soundGame);
+                        Sound.MusicMenu(soundGame);
                         Console.SetCursorPosition(middle.Length + 8, cursorY);
                         if (soundGame)
                         {
