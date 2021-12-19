@@ -70,7 +70,7 @@ namespace SpicyInvader
                         highscore = NewGame.GetScore();
                     }
                     Console.ForegroundColor = ConsoleColor.Green;
-                    Console.Write("Entrez votre speudo : ");
+                    Console.Write("Entrez votre pseudo : ");
                     scoreName.Add(Console.ReadLine());
 
                     NewGame = null;

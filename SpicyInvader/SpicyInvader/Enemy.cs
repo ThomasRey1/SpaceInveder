@@ -18,7 +18,6 @@ namespace SpicyInvader
     {
         #region Properties
         //Properties
-        private bool _soundGame;                                            // The sound is ON or OFF
         private Random _shoot = new Random();                                 // Generate a random number
         private Timer _enemyShooting = new Timer(250);                      // Loop to shoot a missile
         #endregion
@@ -28,7 +27,7 @@ namespace SpicyInvader
         /// <summary>
         /// SoundGame property definition
         /// </summary>
-        public bool SoundGame { get { return _soundGame; } }
+        public bool SoundGame { get; }                                     // The sound is ON or OFF
 
         /// <summary>
         /// ShipForm property definition
@@ -82,13 +81,10 @@ namespace SpicyInvader
             ShipForm = "■─▬─■";
             this.EnemyX = enemyX;
             this.EnemyY = enemyY;
-            this._soundGame = soundGame;
+            this.SoundGame = soundGame;
             this.EnemyDirection = enemyDirection;
             this.Difficulty = difficulty;
-            this.MissileEnemy = new Missile(1, 29, posXBunker, player);
-
-            Console.SetCursorPosition(EnemyX, EnemyY);    // Position the cursor to the ship coordinate
-            Console.Write(ShipForm);
+            this.MissileEnemy = new Missile(EnemyX, EnemyY, posXBunker, player);
 
             _enemyShooting.Elapsed += new ElapsedEventHandler(EnemyShoot);
             _enemyShooting.Start();
@@ -109,7 +105,7 @@ namespace SpicyInvader
                 {
                     try
                     {
-                        Sound.SoundShipShoot(_soundGame); // Play the shoot sound
+                        Sound.SoundShipShoot(SoundGame); // Play the shoot sound
                         MissileEnemy.MissileLive = true;
                         MissileEnemy.MissileY = this.EnemyY + 1;
                         MissileEnemy.MissileX = this.EnemyX + ShipForm.Length / 2;
@@ -128,7 +124,7 @@ namespace SpicyInvader
                 {
                     try
                     {
-                        Sound.SoundShipShoot(_soundGame); // Play the shoot sound
+                        Sound.SoundShipShoot(SoundGame); // Play the shoot sound
                         MissileEnemy.MissileLive = true;
                         MissileEnemy.MissileY = this.EnemyY + 1;
                         MissileEnemy.MissileX = this.EnemyX + ShipForm.Length / 2;

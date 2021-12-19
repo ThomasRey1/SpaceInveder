@@ -76,9 +76,7 @@ namespace SpicyInvader
             this._enemies = enemies;
             this.ShipLife = 3;
             this.Score = 0;
-            this.MissilePlayer = new Missile(1, 1, false, posXBunker, _enemies, this);
-            Console.SetCursorPosition(ShipX, ShipY);
-            Console.Write(ShipForm);
+            this.MissilePlayer = new Missile(ShipX, ShipY, false, posXBunker, _enemies, this);
         }
 
         [DllImport("User32.dll")]                       // Import the User32.dll

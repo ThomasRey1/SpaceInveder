@@ -59,7 +59,10 @@ namespace SpicyInvader
                 }
             }
 
-            _player = new PlayerShip(Console.WindowWidth / 2 - 3, Console.WindowHeight - 7, _soundGame, _posXBunker, _enemies);       // Create the player ship    
+            _player = new PlayerShip(Console.WindowWidth / 2 - 3, Console.WindowHeight - 7, _soundGame, _posXBunker, _enemies);       // Create the player 
+            Console.SetCursorPosition(_player.ShipX, _player.ShipY);
+            Console.Write(_player.ShipForm);
+
 
             CreatEnemy();
             Console.SetCursorPosition(Console.WindowLeft, Console.WindowHeight - 6);
@@ -141,6 +144,8 @@ namespace SpicyInvader
                 Enemy enemy = new Enemy(Console.WindowWidth / 3 + 5, Console.WindowTop + 2 * i + 2, _soundGame, true, _posXBunker, _player, _difficulty);      // Create an enemy
                 _enemies[x] = enemy;
                 x++;
+                Console.SetCursorPosition(enemy.EnemyX, enemy.EnemyY);    // Position the cursor to the ship coordinate
+                Console.Write(enemy.ShipForm);
                 Thread.Sleep(100);
             }
 
@@ -149,6 +154,8 @@ namespace SpicyInvader
                 Enemy enemy = new Enemy(Console.WindowWidth / 3 + 5 * 2 + 1, Console.WindowTop + 2 * i + 2, _soundGame, true, _posXBunker, _player, _difficulty);      // Create an enemy
                 _enemies[x] = enemy;
                 x++;
+                Console.SetCursorPosition(enemy.EnemyX, enemy.EnemyY);    // Position the cursor to the ship coordinate
+                Console.Write(enemy.ShipForm);
                 Thread.Sleep(100);
             }
 
@@ -157,7 +164,9 @@ namespace SpicyInvader
                 Enemy enemy = new Enemy(Console.WindowWidth / 3 + 5 * 3 + 2, Console.WindowTop + 2 * i + 2, _soundGame, true, _posXBunker, _player, _difficulty);      // Create an enemy
                 _enemies[x] = enemy;
                 x++;
-                System.Threading.Thread.Sleep(100);
+                Console.SetCursorPosition(enemy.EnemyX, enemy.EnemyY);    // Position the cursor to the ship coordinate
+                Console.Write(enemy.ShipForm);
+                Thread.Sleep(100);
             }
 
             for (int i = 0; i != 4; i++)
@@ -165,6 +174,8 @@ namespace SpicyInvader
                 Enemy enemy = new Enemy(Console.WindowWidth / 3 + 5 * 4 + 3, Console.WindowTop + 2 * i + 2, _soundGame, true, _posXBunker, _player, _difficulty);      // Create an enemy
                 _enemies[x] = enemy;
                 x++;
+                Console.SetCursorPosition(enemy.EnemyX, enemy.EnemyY);    // Position the cursor to the ship coordinate
+                Console.Write(enemy.ShipForm);
                 Thread.Sleep(100);
             }
 
@@ -173,6 +184,8 @@ namespace SpicyInvader
                 Enemy enemy = new Enemy(Console.WindowWidth / 3 + 5 * 5 + 4, Console.WindowTop + 2 * i + 2, _soundGame, true, _posXBunker, _player, _difficulty);      // Create an enemy
                 _enemies[x] = enemy;
                 x++;
+                Console.SetCursorPosition(enemy.EnemyX, enemy.EnemyY);    // Position the cursor to the ship coordinate
+                Console.Write(enemy.ShipForm);
                 Thread.Sleep(100);
             }
         }

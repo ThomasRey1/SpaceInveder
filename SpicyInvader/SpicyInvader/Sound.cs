@@ -16,8 +16,8 @@ namespace SpicyInvader
     public class Sound
     {
         #region Method
-        static WindowsMediaPlayer musicMenu = new WindowsMediaPlayer();
-        static WindowsMediaPlayer musicGame = new WindowsMediaPlayer();
+        static WindowsMediaPlayer _musicMenu = new WindowsMediaPlayer();
+        static WindowsMediaPlayer _musicGame = new WindowsMediaPlayer();
 
         /// <summary>
         /// Play the main music
@@ -29,12 +29,12 @@ namespace SpicyInvader
             {
                 if (sound == true)
                 {
-                    musicMenu.URL = "Resource/MusicMenu.mp3";
-                    musicGame.controls.stop();
+                    _musicMenu.URL = "Resource/MusicMenu.mp3";
+                    _musicGame.controls.stop();
                 }
                 else
                 {
-                    musicMenu.controls.stop();
+                    _musicMenu.controls.stop();
                 }
             }
             catch
@@ -53,8 +53,8 @@ namespace SpicyInvader
             {
                 if (sound == true)
                 {
-                    musicMenu.controls.stop();
-                    musicGame.URL = "Resource/MusicGame.mp3";
+                    _musicMenu.controls.stop();
+                    _musicGame.URL = "Resource/MusicGame.mp3";
                 }
             }
             catch

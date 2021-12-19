@@ -14,7 +14,6 @@ C:\Users\thorey\Desktop\SpicyInvader\SpicyInvader\bin\Debug\SpicyInvader.pdb
 F:\année 2\Semestre1\P.Chenaux\P_Dev\SpicyInvader\SpicyInvader\bin\Debug\SpicyInvader.exe.config
 F:\année 2\Semestre1\P.Chenaux\P_Dev\SpicyInvader\SpicyInvader\bin\Debug\SpicyInvader.exe
 F:\année 2\Semestre1\P.Chenaux\P_Dev\SpicyInvader\SpicyInvader\bin\Debug\SpicyInvader.pdb
-F:\année 2\Semestre1\P.Chenaux\P_Dev\SpicyInvader\SpicyInvader\obj\Debug\SpicyInvader.csprojAssemblyReference.cache
 F:\année 2\Semestre1\P.Chenaux\P_Dev\SpicyInvader\SpicyInvader\obj\Debug\SpicyInvader.csproj.CoreCompileInputs.cache
 F:\année 2\Semestre1\P.Chenaux\P_Dev\SpicyInvader\SpicyInvader\obj\Debug\SpicyInvader.exe
 F:\année 2\Semestre1\P.Chenaux\P_Dev\SpicyInvader\SpicyInvader\obj\Debug\SpicyInvader.pdb
@@ -34,3 +33,12 @@ C:\Users\thomr\OneDrive\Bureau\SpicyInvader\SpicyInvader\obj\Debug\SpicyInvader.
 C:\Users\thomr\OneDrive\Bureau\SpicyInvader\SpicyInvader\bin\Debug\Interop.WMPLib.dll
 C:\Users\thomr\OneDrive\Bureau\SpicyInvader\SpicyInvader\bin\Debug\AxInterop.WMPLib.dll
 C:\Users\thomr\OneDrive\Bureau\SpicyInvader\SpicyInvader\obj\Debug\SpicyInvader.Properties.Resources.resources
+F:\année 2\Semestre1\P.Chenaux\P_Dev\SpicyInvader\SpicyInvader\bin\Debug\Interop.WMPLib.dll
+F:\année 2\Semestre1\P.Chenaux\P_Dev\SpicyInvader\SpicyInvader\bin\Debug\AxInterop.WMPLib.dll
+F:\année 2\Semestre1\P.Chenaux\P_Dev\SpicyInvader\SpicyInvader\obj\Debug\SpicyInvader.csproj.AssemblyReference.cache
+F:\année 2\Semestre1\P.Chenaux\P_Dev\SpicyInvader\SpicyInvader\obj\Debug\SpicyInvader.csproj.SuggestedBindingRedirects.cache
+F:\année 2\Semestre1\P.Chenaux\P_Dev\SpicyInvader\SpicyInvader\obj\Debug\Interop.WMPLib.dll
+F:\année 2\Semestre1\P.Chenaux\P_Dev\SpicyInvader\SpicyInvader\obj\Debug\AxInterop.WMPLib.dll
+F:\année 2\Semestre1\P.Chenaux\P_Dev\SpicyInvader\SpicyInvader\obj\Debug\SpicyInvader.csproj.ResolveComReference.cache
+F:\année 2\Semestre1\P.Chenaux\P_Dev\SpicyInvader\SpicyInvader\obj\Debug\SpicyInvader.Properties.Resources.resources
+F:\année 2\Semestre1\P.Chenaux\P_Dev\SpicyInvader\SpicyInvader\obj\Debug\SpicyInvader.csproj.GenerateResource.cache
